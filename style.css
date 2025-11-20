@@ -1,0 +1,257 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  background: #f5f5f5;
+  color: #222;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #1e88e5;
+  color: #fff;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.subtitle {
+  margin: 0.1rem 0 0;
+  font-size: 0.85rem;
+  opacity: 0.9;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.header-right input,
+.header-right select {
+  padding: 0.15rem 0.3rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+}
+
+main {
+  display: flex;
+  height: calc(100vh - 80px);
+}
+
+/* 3ペイン */
+.pane {
+  padding: 0.75rem;
+  overflow-y: auto;
+  border-right: 1px solid #ddd;
+  background: #fff;
+}
+
+.pane:last-child {
+  border-right: none;
+}
+
+.pane-left {
+  flex: 1.2;
+}
+
+.pane-center {
+  flex: 1.1;
+  background: #fafafa;
+}
+
+.pane-right {
+  flex: 0.9;
+  background: #fdfdfd;
+}
+
+/* 記事部分 */
+
+.article-meta {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.article-text {
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* 文の表示スタイル */
+
+.sentence-chip {
+  position: relative;
+  padding: 0.15rem 0.25rem;
+  margin: 0.1rem 0;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.sentence-chip.fact {
+  background: rgba(129, 199, 132, 0.2); /* 緑系（事実） */
+}
+
+.sentence-chip.prediction {
+  background: rgba(255, 241, 118, 0.4); /* 黄系（予測） */
+}
+
+.sentence-chip.opinion {
+  background: rgba(244, 143, 177, 0.25); /* ピンク系（意見・分析） */
+}
+
+.sentence-chip.highlight {
+  outline: 2px solid #1e88e5;
+}
+
+/* 文カード（中央ペイン） */
+
+.claims-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.claim-card {
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 0.5rem 0.6rem;
+  font-size: 0.9rem;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.03);
+}
+
+.claim-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.2rem;
+}
+
+.claim-id {
+  font-weight: bold;
+  font-size: 0.85rem;
+}
+
+.claim-type-badge {
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  font-size: 0.75rem;
+  border: 1px solid transparent;
+}
+
+.claim-type-badge.fact {
+  background: #e8f5e9;
+  border-color: #81c784;
+  color: #2e7d32;
+}
+
+.claim-type-badge.prediction {
+  background: #fffde7;
+  border-color: #fbc02d;
+  color: #f57f17;
+}
+
+.claim-type-badge.opinion {
+  background: #fce4ec;
+  border-color: #f06292;
+  color: #c2185b;
+}
+
+.claim-text {
+  margin: 0.25rem 0;
+}
+
+.claim-meta {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.claim-meta span + span::before {
+  content: "・";
+}
+
+/* 右ペイン */
+
+.summary-card {
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.7rem;
+  font-size: 0.9rem;
+}
+
+.summary-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 0.95rem;
+}
+
+#directionSummary {
+  padding-left: 1.1rem;
+  margin: 0.2rem 0 0;
+}
+
+#directionSummary li {
+  margin-bottom: 0.1rem;
+}
+
+.prediction-pill {
+  border-radius: 999px;
+  border: 1px solid #fbc02d;
+  padding: 0.15rem 0.45rem;
+  margin: 0.15rem;
+  display: inline-block;
+  font-size: 0.8rem;
+  background: #fffde7;
+}
+
+.prediction-pill .label {
+  font-weight: bold;
+}
+
+.future-tree {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  white-space: pre;
+}
+
+/* フッター */
+
+footer {
+  font-size: 0.75rem;
+  padding: 0.3rem 0.8rem;
+  background: #eeeeee;
+  color: #555;
+  border-top: 1px solid #ddd;
+}
+
+/* スマホ対応 */
+
+@media (max-width: 960px) {
+  main {
+    flex-direction: column;
+    height: auto;
+  }
+  .pane {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    height: auto;
+    max-height: 50vh;
+  }
+  .pane:last-child {
+    border-bottom: none;
+  }
+}

@@ -2,31 +2,93 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>ニュースアーカイブ（予測 × 事実）一覧</title>
-  <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/style_index.css">
+  <title>ニュース分類アーカイブ（試作）</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    h1 { margin-bottom: 10px; }
+    .article {
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    /* 色分け */
+    .fact     { background: #e7fbe7; }
+    .mixed    { background: #fff4d8; }
+    .prediction { background: #ffe7e7; }
+
+    .filter-box { margin-bottom: 20px; }
+  </style>
 </head>
 <body>
 
-<header>
-  <h1>ニュースアーカイブ一覧</h1>
-  <div class="filters">
-    <select id="filterType">
+<h1>ニュース分類アーカイブ（試作）</h1>
+
+<div class="filter-box">
+  <label>タイプで絞り込み:
+    <select id="filter">
       <option value="all">すべて</option>
-      <option value="fact">事実記事</option>
-      <option value="prediction">予測記事</option>
-      <option value="mixed">混在</option>
+      <option value="fact">事実</option>
+      <option value="mixed">事実＋予測</option>
+      <option value="prediction">予測中心</option>
     </select>
-    <input id="keywordInput" type="text" placeholder="キーワード検索">
-  </div>
-</header>
+  </label>
+</div>
 
-<main>
-  <div id="articleList" class="article-list">
-    <!-- JSで記事カードを挿入 -->
-  </div>
-</main>
+<div id="list"></div>
 
-<script src="js/script_index.js"></script>
+<script>
+// 読み込む JSON ファイル一覧
+const files = [
+  "20251114_rice_price.json",
+  "20251121_tokyowan_earthquake.json",
+  "20251121_ip_phone_scam.json",
+  "20251121_us_ambassador_followers.json",
+  "20251121_china_pressure_japan.json"
+];
+
+const listEl = document.getElementById("list");
+const filterEl = document.getElementById("filter");
+
+async function loadArticles() {
+  const articles = [];
+
+  for (const file of files) {
+    const res = await fetch("./data/" + file);
+    const json = await res.json();
+    articles.push(json);
+  }
+
+  window.allArticles = articles;
+  render();
+}
+
+function render() {
+  const filter = filterEl.value;
+  listEl.innerHTML = "";
+
+  const filtered = window.allArticles.filter(a =>
+    filter === "all" ? true : a.articleType === filter
+  );
+
+  filtered.forEach(a => {
+    const div = document.createElement("div");
+    div.className = `article ${a.articleType}`;
+    div.innerHTML = `
+      <h3><a href="./article_viewer.html?id=${a.id}">${a.title}</a></h3>
+      <p>${a.summary}</p>
+      <p><b>タイプ:</b> ${a.articleType}</p>
+      <p><b>日付:</b> ${a.publishedAt}</p>
+    `;
+    listEl.appendChild(div);
+  });
+}
+
+filterEl.addEventListener("change", render);
+
+// 読み込み開始
+loadArticles();
+</script>
+
 </body>
 </html>

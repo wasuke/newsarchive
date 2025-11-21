@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>記事ビューア</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .container {
+      display: flex;
+      gap: 20px;
+    }
+    .col {
+      flex: 1;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .claim {
+      border-bottom: 1px solid #ddd;
+      padding: 8px 0;
+    }
+    .fact { color: green; }
+    .prediction { color: red; }
+    .analysis { color: #b8860b; }
+  </style>
+</head>
+<body>
+
+<a href="./index.html">← 一覧へ戻る</a>
+
+<h1 id="title">読み込み中...</h1>
+<p id="meta"></p>
+
+<div class="container">
+  <div class="col">
+    <h2>記事情報</h2>
+    <pre id="article_json" style="white-space: pre-wrap;"></pre>
+  </div>
+
+  <div class="col">
+    <h2>文ごとの分類</h2>
+    <div id="claims"></div>
+  </div>
+
+  <div class="col">
+    <h2>予測ツリー</h2>
+    <pre id="futureTree" style="white-space: pre-wrap;"></pre>
+  </div>
+</div>
+
+<script>
+async function main() {
+  const params = new URLSearchParams(location.search);
+  const id = params.get("id");
+  if (!id) {
+    document.body.innerHTML = "ID が指定されていません";
+    return;
+  }
+
+  // 読み込む JSON ファイルを推定
+  const file = [...[
+    "20251114_rice_price",
+    "20251121_tokyowan_earthquake",
+    "20251121_ip_phone_scam",
+    "20251121_us_ambassador_followers",
+    "20251121_china_pressure_japan"
+  ]].find(f => f === id) + ".json";
+
+  const res = await fetch("./data/" + file);
+  const json = await res.json();
+
+  document.getElementById("title").textContent = json.title;
+  document.getElementById("meta").textContent = `${json.source} / ${json.publishedAt}`;
+  document.getElementById("article_json").textContent = JSON.stringify(json, null, 2);
+  document.getElementById("futureTree").textContent = json.futureTree || "(なし)";
+
+  const claimsEl = document.getElementById("claims");
+  json.claims.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "claim";
+    div.innerHTML = `
+      <p><span class="${c.type}">[${c.type}]</span> ${c.text}</p>
+    `;
+    claimsEl.appendChild(div);
+  });
+}
+
+main();
+</script>
+
+</body>
+</html>

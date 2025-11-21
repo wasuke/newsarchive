@@ -1,0 +1,168 @@
+{
+  "id": "20251121_china_pressure_japan",
+  "title": "〈中国からの相次ぐ圧力〉ニセコの旅館は「予約が少ない」「ホテルはキャンセルが続出」“豊かなホタテの村”の漁協関係者も不安視、上野のパンダも絶望的",
+  "publishedAt": "2025-11-21T18:18:00+09:00",
+  "source": "集英社オンライン",
+  "summary": "高市首相の台湾発言を受けて中国が日本に圧力を強め、旅行・輸入・地方交流などに影響が広がる。北海道のニセコでは宿泊キャンセル、ホタテ産地でも不安が高まっている。",
+  "articleType": "mixed",
+
+  "claims": [
+    {
+      "id": "claim:1",
+      "text": "中国が高市首相の台湾関連発言に対抗し、日本への圧力を次々とかけている。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:2",
+      "text": "中国政府は自国民に渡航自粛を呼びかけ、日本産水産物の輸入再開の約束も反故にした。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:3",
+      "text": "今後も中国は制裁を強めてくる気配だ。",
+      "type": "prediction",
+      "certainty": "medium",
+      "predictionRef": "pred:1",
+      "timeScope": "future"
+    },
+    {
+      "id": "claim:4",
+      "text": "中国外交部の報道官は高市首相を名指しで非難し、日本に対し断固たる対抗措置を取る姿勢を示した。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:5",
+      "text": "日中韓文化相会合の延期について中国外交部は高市発言が基礎を破壊したと主張した。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:6",
+      "text": "中国は2017年にTHAAD配備を許した韓国に圧力をかけた過去があり、今回もそれに匹敵する怒りを見せているとされる。",
+      "type": "analysis",
+      "certainty": "medium",
+      "timeScope": "timeless"
+    },
+    {
+      "id": "claim:7",
+      "text": "中国の国家安全省は高市発言を批判する投稿に、日本のスパイ事件摘発を強調する文章を加えた。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:8",
+      "text": "両国の地方交流イベントが次々と中止されている。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:9",
+      "text": "上野動物園のパンダが返還されると日本は全国にパンダがいなくなる状況になるとの専門家の警告が出た。",
+      "type": "prediction",
+      "certainty": "medium",
+      "predictionRef": "pred:2",
+      "timeScope": "future"
+    },
+    {
+      "id": "claim:10",
+      "text": "ニセコのホテルでは予約が減り、キャンセルが続出している。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:11",
+      "text": "ニセコの旅館関係者は、中国の渡航自粛が影響し始めていると感じている。",
+      "type": "analysis",
+      "certainty": "medium",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:12",
+      "text": "今後キャンセルはさらに増えると留学生は語った。",
+      "type": "prediction",
+      "certainty": "medium",
+      "predictionRef": "pred:3",
+      "timeScope": "future"
+    },
+    {
+      "id": "claim:13",
+      "text": "ホタテ産地の漁協関係者は今後の影響を強く懸念している。",
+      "type": "analysis",
+      "certainty": "medium",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:14",
+      "text": "ホタテ価格は高値だが生産量が落ちており、中国の措置が追い討ちをかける可能性がある。",
+      "type": "prediction",
+      "certainty": "medium",
+      "predictionRef": "pred:4",
+      "timeScope": "future"
+    },
+    {
+      "id": "claim:15",
+      "text": "猿払村はホタテ産業で豊かになったが、今回の圧力で逆戻りするとの懸念がある。",
+      "type": "analysis",
+      "certainty": "medium",
+      "timeScope": "future"
+    },
+    {
+      "id": "claim:16",
+      "text": "中国が食品輸出を止めれば日本の物価はさらに上がることが必至とされる。",
+      "type": "prediction",
+      "certainty": "high",
+      "predictionRef": "pred:5",
+      "timeScope": "future"
+    }
+  ],
+
+  "predictions": [
+    {
+      "id": "pred:1",
+      "text": "中国は今後さらに対日制裁を強める可能性が高い",
+      "confidence": "medium",
+      "target": "外交圧力の強化",
+      "outcome": "unknown"
+    },
+    {
+      "id": "pred:2",
+      "text": "上野動物園からパンダが返還され、日本国内からパンダがいなくなる",
+      "confidence": "medium",
+      "target": "動物外交の悪化",
+      "outcome": "unknown"
+    },
+    {
+      "id": "pred:3",
+      "text": "中国人観光客のキャンセルがさらに増加する",
+      "confidence": "medium",
+      "target": "インバウンド減少",
+      "outcome": "unknown"
+    },
+    {
+      "id": "pred:4",
+      "text": "ホタテ産業が中国制裁により打撃を受ける",
+      "confidence": "medium",
+      "target": "漁業の収益悪化",
+      "outcome": "unknown"
+    },
+    {
+      "id": "pred:5",
+      "text": "中国が食品輸出を止めれば日本国内の物価がさらに上昇する",
+      "confidence": "high",
+      "target": "物価高進行",
+      "outcome": "unknown"
+    }
+  ],
+
+  "futureTree": "2025-以降の対中圧力シナリオ：制裁強化 → 観光減少 → 水産物輸入停止 → 地方経済の悪化（ホタテなど） → 日本の物価上昇の可能性"
+}

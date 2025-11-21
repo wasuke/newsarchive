@@ -1,0 +1,57 @@
+{
+  "id": "20251121_us_ambassador_followers",
+  "title": "駐日米国大使、X投稿「日米両国にとって、また一つ記念すべき出来事」に何事？→予想外の報告→フォロワー祝福「ありがとう、ジョージ！」",
+  "publishedAt": "2025-11-21T21:51:00+09:00",
+  "source": "中日スポーツ",
+  "summary": "駐日米国大使ジョージ・グラス氏がXでフォロワー20万人達成を報告。日米関係に関する投稿で注目度が高まり、祝福コメントが多く寄せられた。",
+  "articleType": "fact",
+
+  "claims": [
+    {
+      "id": "claim:1",
+      "text": "ジョージ・グラス駐日米国大使が21日にXを更新し、「日米両国にとって、また一つ記念すべき出来事です！」と投稿した。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:2",
+      "text": "「台湾有事」をめぐる高市首相の国会答弁以降、日中関係が冷え込む中でグラス大使は日本を支持する投稿を繰り返している。",
+      "type": "fact",
+      "certainty": "medium",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:3",
+      "text": "グラス大使は「フォロワー20万人を達成しました！」と報告した。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:4",
+      "text": "最近の投稿で日本国内での注目度が高まったことが影響したようだ。",
+      "type": "fact",
+      "certainty": "medium",
+      "timeScope": "analysis"
+    },
+    {
+      "id": "claim:5",
+      "text": "大使は「日米の素晴らしいパートナーシップをさらに深め強化していく活動へのご支援に感謝します」と述べた。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:6",
+      "text": "この投稿に対して祝福や称賛のコメントが多数寄せられた。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    }
+  ],
+
+  "predictions": [],
+
+  "futureTree": "（このニュースには予測構造は含まれていない）"
+}

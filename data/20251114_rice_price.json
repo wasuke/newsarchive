@@ -1,0 +1,184 @@
+{
+  "@context": {
+    "narch": "http://example.org/news-archive#"
+  },
+  "@id": "article:niigata-20251114",
+  "@type": "narch:NewsArticle",
+  "narch:title": "「投げ売りも出てくるのでは」新米在庫だぶつき、JAや集荷業者から懸念の声…米価下落の見通し強まる",
+  "narch:publishedAt": "2025-11-14T10:00:00+09:00",
+
+  "narch:hasClaim": [
+
+    {
+      "@id": "claim:1",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "コメ価格下落の見通しが強まっている。",
+      "narch:claimType": "fact",
+      "narch:certainty": "medium",
+      "narch:refersToEvent": "event:rice-price-outlook"
+    },
+
+    {
+      "@id": "claim:2",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "2025年産米の収穫量が増え、需給が緩むとの予測が業者の間に広まる。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "high",
+      "narch:refersToPrediction": "pred:1"
+    },
+
+    {
+      "@id": "claim:4",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "資金繰りを見通しコメを投げ売りする損切りの動きが出るとの見方もある。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "medium",
+      "narch:refersToPrediction": "pred:2"
+    },
+
+    {
+      "@id": "claim:7",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "新米の在庫がだぶついていると推察。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "medium",
+      "narch:refersToPrediction": "pred:3"
+    },
+
+    {
+      "@id": "claim:8",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "備蓄米の買い戻しなどの対応を検討してほしい。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "low",
+      "narch:refersToPrediction": "pred:4"
+    },
+
+    {
+      "@id": "claim:9",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "25年産も大きく回復しないとの見方が大勢だ。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "high",
+      "narch:refersToPrediction": "pred:5"
+    },
+
+    {
+      "@id": "claim:13",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "これから投げ売りも出てくるのではないか。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "low",
+      "narch:refersToPrediction": "pred:2"
+    },
+
+    {
+      "@id": "claim:15",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "ことしの新米もこうした動きに戻るとの見方。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "medium",
+      "narch:refersToPrediction": "pred:6"
+    },
+
+    {
+      "@id": "claim:16",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "消費者は24年産や輸入米を買い、25年産が下がるまで待とうとする。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "medium",
+      "narch:refersToPrediction": "pred:7"
+    },
+
+    {
+      "@id": "claim:17",
+      "@type": "narch:NewsClaim",
+      "narch:claimText": "今後需給が引き締まる可能性もある。",
+      "narch:claimType": "prediction",
+      "narch:certainty": "low",
+      "narch:refersToPrediction": "pred:8"
+    }
+  ],
+
+  "narch:hasPrediction": [
+    {
+      "@id": "pred:1",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "25年産で需給が緩む",
+      "narch:predictionHorizon": "2025",
+      "narch:predictionConfidence": "medium",
+      "narch:predictionTarget": "event:supply-demand-easing"
+    },
+
+    {
+      "@id": "pred:2",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "投げ売りが出る可能性",
+      "narch:predictionConfidence": "low",
+      "narch:predictionTarget": "event:dumping-rice"
+    },
+
+    {
+      "@id": "pred:3",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "在庫がだぶつく",
+      "narch:predictionConfidence": "medium",
+      "narch:predictionTarget": "event:inventory-oversupply"
+    },
+
+    {
+      "@id": "pred:4",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "備蓄米買い戻しの政策対応",
+      "narch:predictionConfidence": "low",
+      "narch:predictionTarget": "event:policy-buyback"
+    },
+
+    {
+      "@id": "pred:5",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "25年産の集荷率は回復しない",
+      "narch:predictionConfidence": "high",
+      "narch:predictionTarget": "event:low-collection-rate"
+    },
+
+    {
+      "@id": "pred:6",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "通常の市場動きに戻る",
+      "narch:predictionConfidence": "medium",
+      "narch:predictionTarget": "event:market-normalization"
+    },
+
+    {
+      "@id": "pred:7",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "消費者は安い米を買い25年産値下がりを待つ",
+      "narch:predictionConfidence": "medium",
+      "narch:predictionTarget": "event:consumer-waiting-behavior"
+    },
+
+    {
+      "@id": "pred:8",
+      "@type": "narch:Prediction",
+      "narch:predictionText": "需給が引き締まる可能性",
+      "narch:predictionConfidence": "low",
+      "narch:predictionTarget": "event:supply-tightening"
+    }
+  ],
+
+  "narch:hasOutcomeEvaluation": [
+    {
+      "@id": "outcome:pred1",
+      "@type": "narch:Outcome",
+      "narch:outcomeStatus": "unknown",
+      "narch:noFollowupFlag": true
+    },
+    {
+      "@id": "outcome:pred2",
+      "@type": "narch:Outcome",
+      "narch:outcomeStatus": "unknown",
+      "narch:noFollowupFlag": true
+    }
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "id": "20251121_tokyowan_earthquake",
+  "title": "【速報】関東で地震　M4.0　東京、神奈川、埼玉、千葉、茨城で揺れ　震源は東京湾",
+  "publishedAt": "2025-11-21T12:35:00+09:00",
+  "source": "千葉日報",
+  "summary": "21日昼、東京湾を震源とする地震（M4.0）が発生。千葉市などで最大震度2を観測し、津波の心配はない。",
+  "articleType": "fact",
+
+  "claims": [
+    {
+      "id": "claim:1",
+      "text": "21日午後0時24分ごろ、東京湾を震源とする地震があった。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:2",
+      "text": "最大震度2、マグニチュード（M）は4.0と推定される。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:3",
+      "text": "震源の深さは約40キロ。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:4",
+      "text": "千葉県内は千葉市稲毛区、市川市、浦安市で震度2を観測した。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:5",
+      "text": "この地震による津波の心配はない。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:6",
+      "text": "地震が及んだ地域（震度1以上）の総人口は約1429.5万人。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:7",
+      "text": "65歳以上人口は22.8％の約325.2万人。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    },
+    {
+      "id": "claim:8",
+      "text": "各地域の震度は以下の通り（千葉県内の震度2と震度1の一覧）。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:9",
+      "text": "全国の震度は以下の通り（茨城県、東京都、埼玉県、神奈川県）。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "past"
+    },
+    {
+      "id": "claim:10",
+      "text": "震度1以上を観測した市区町村人口の合計は1429万5562人である。",
+      "type": "fact",
+      "certainty": "high",
+      "timeScope": "present"
+    }
+  ],
+
+  "predictions": [],
+
+  "futureTree": "（この速報には予測要素なし）"
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>ニュースアーカイブ（予測 × 事実）一覧</title>
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style_index.css">
+</head>
+<body>
+
+<header>
+  <h1>ニュースアーカイブ一覧</h1>
+  <div class="filters">
+    <select id="filterType">
+      <option value="all">すべて</option>
+      <option value="fact">事実記事</option>
+      <option value="prediction">予測記事</option>
+      <option value="mixed">混在</option>
+    </select>
+    <input id="keywordInput" type="text" placeholder="キーワード検索">
+  </div>
+</header>
+
+<main>
+  <div id="articleList" class="article-list">
+    <!-- JSで記事カードを挿入 -->
+  </div>
+</main>
+
+<script src="js/script_index.js"></script>
+</body>
+</html>

@@ -2,12 +2,13 @@
 async function loadArticle() {
   const params = new URLSearchParams(location.search);
   const id = params.get("id");
+
   if (!id) {
     document.body.innerHTML = "<h2>記事IDが指定されていません</h2>";
     return;
   }
 
-  // JSON ファイル名を決定
+  // ★★★ ここが重要（すべての原因がここに集約） ★★★
   const file = `./data/${id}.json`;
 
   const res = await fetch(file);

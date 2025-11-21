@@ -2,92 +2,81 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>記事ビューア</title>
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-    .container {
-      display: flex;
-      gap: 20px;
-    }
-    .col {
-      flex: 1;
-      border: 1px solid #ccc;
-      padding: 10px;
-      border-radius: 8px;
-      background: #fafafa;
-    }
-    .claim {
-      border-bottom: 1px solid #ddd;
-      padding: 8px 0;
-    }
-    .fact { color: green; }
-    .prediction { color: red; }
-    .analysis { color: #b8860b; }
-  </style>
+  <title>ニュース事実・予測ビューア（試作）</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<a href="./index.html">← 一覧へ戻る</a>
-
-<h1 id="title">読み込み中...</h1>
-<p id="meta"></p>
-
-<div class="container">
-  <div class="col">
-    <h2>記事情報</h2>
-    <pre id="article_json" style="white-space: pre-wrap;"></pre>
+<header>
+  <div class="header-left">
+    <h1>ニュース事実・予測ビューア（試作）</h1>
+    <p class="subtitle">元記事・文メタデータ・予測の方向性を同時表示</p>
   </div>
-
-  <div class="col">
-    <h2>文ごとの分類</h2>
-    <div id="claims"></div>
+  <div class="header-right">
+    <label>
+      キーワード検索：
+      <input type="text" id="keywordInput" placeholder="例：投げ売り・需給・25年産…">
+    </label>
+    <label>
+      種別：
+      <select id="claimTypeFilter">
+        <option value="all">すべて</option>
+        <option value="fact">事実</option>
+        <option value="analysis">意見・分析</option>
+        <option value="prediction">予測</option>
+      </select>
+    </label>
   </div>
+</header>
 
-  <div class="col">
-    <h2>予測ツリー</h2>
-    <pre id="futureTree" style="white-space: pre-wrap;"></pre>
-  </div>
-</div>
+<main>
+  <!-- 左：元記事 -->
+  <section class="pane pane-left">
+    <h2>元記事</h2>
+    <div class="article-meta">
+      <div>タイトル：<span id="articleTitle"></span></div>
+      <div>媒体：<span id="articleSource"></span></div>
+      <div>配信日時：<span id="articleDate"></span></div>
+    </div>
+    <hr>
 
-<script>
-async function main() {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
-  if (!id) {
-    document.body.innerHTML = "ID が指定されていません";
-    return;
-  }
+    <div id="articleText" class="article-text">
+      <!-- JSで文章を文単位に埋め込む -->
+    </div>
+  </section>
 
-  // 読み込む JSON ファイルを推定
-  const file = [...[
-    "20251114_rice_price",
-    "20251121_tokyowan_earthquake",
-    "20251121_ip_phone_scam",
-    "20251121_us_ambassador_followers",
-    "20251121_china_pressure_japan"
-  ]].find(f => f === id) + ".json";
+  <!-- 中央：文ごとのメタデータ -->
+  <section class="pane pane-center">
+    <h2>文メタデータ</h2>
+    <div class="claims-list" id="claimsList"></div>
+  </section>
 
-  const res = await fetch("./data/" + file);
-  const json = await res.json();
+  <!-- 右：予測と全体方向性 -->
+  <section class="pane pane-right">
+    <h2>予測・方向性ビュー</h2>
 
-  document.getElementById("title").textContent = json.title;
-  document.getElementById("meta").textContent = `${json.source} / ${json.publishedAt}`;
-  document.getElementById("article_json").textContent = JSON.stringify(json, null, 2);
-  document.getElementById("futureTree").textContent = json.futureTree || "(なし)";
+    <div class="summary-card">
+      <h3>このニュースのざっくり方向性</h3>
+      <ul id="directionSummary"></ul>
+    </div>
 
-  const claimsEl = document.getElementById("claims");
-  json.claims.forEach(c => {
-    const div = document.createElement("div");
-    div.className = "claim";
-    div.innerHTML = `
-      <p><span class="${c.type}">[${c.type}]</span> ${c.text}</p>
-    `;
-    claimsEl.appendChild(div);
-  });
-}
+    <div class="summary-card">
+      <h3>予測リスト</h3>
+      <div id="predictionsList"></div>
+    </div>
 
-main();
-</script>
+    <div class="summary-card">
+      <h3>Future Tree（簡易）</h3>
+      <pre id="futureTreeText"></pre>
+    </div>
+  </section>
+</main>
 
+<footer>
+  <p>ニュース JSON ベースのビューア（試作）</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>

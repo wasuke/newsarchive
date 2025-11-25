@@ -1,0 +1,52 @@
+body {
+  font-family: sans-serif;
+  padding: 20px;
+}
+
+.news-item {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sentence-block {
+  margin-bottom: 10px;
+  padding: 6px;
+  border-left: 6px solid #bbb;
+  background: #f9f9f9;
+}
+
+.sentence-block .label {
+  float: right;
+  font-size: 0.8em;
+  color: #555;
+}
+
+.type-fact {
+  border-left-color: #2b8;
+}
+.type-prediction {
+  border-left-color: #d80;
+}
+.type-opinion {
+  border-left-color: #06c;
+}
+
+.badge-private {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #777;
+  color: #fff;
+  font-size: 0.7em;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.claim-type.fact {
+  color: #2a6;
+}
+.claim-type.prediction {
+  color: #c63;
+}
+.claim-type.opinion {
+  color: #666;
+}

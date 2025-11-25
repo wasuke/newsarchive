@@ -1,25 +1,21 @@
 // ============================================================
-//  UI 要素
+// ① JSON 生成（OpenAI /v1/responses API）
 // ============================================================
 
-const apiKeyInput = document.getElementById("apiKeyInput");
-const ghTokenInput = document.getElementById("ghTokenInput");
-const articleInput = document.getElementById("articleInput");
-const jsonOutput = document.getElementById("jsonOutput");
-const statusMessage = document.getElementById("statusMessage");
+document.getElementById("generateJsonBtn").addEventListener("click", async () => {
+  const title = document.getElementById("titleInput").value.trim();
+  const source = document.getElementById("sourceInput").value.trim();
+  const date = document.getElementById("dateInput").value.trim();
+  const body = document.getElementById("bodyInput").value.trim();
+  const publicFlag = document.getElementById("publicFlag").value === "true";
+  const apiKey = document.getElementById("openaiKey").value.trim();
 
-
-// ============================================================
-//  ① JSON生成（OpenAI API）
-// ============================================================
-
-document.getElementById("generateBtn").addEventListener("click", async () => {
-
-  const apiKey = apiKeyInput.value.trim();
   if (!apiKey) return alert("OpenAI APIキーを入力してください");
+  if (!title || !source || !date || !body)
+    return alert("タイトル・新聞名・日付・本文をすべて入力してください");
 
   const prompt = `
-以下の新聞記事を次のスキーマに従ってJSON化してください：
+次の新聞記事から、新スキーマの JSON を生成してください。
 
 【新スキーマ】
 {
@@ -32,15 +28,21 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   "sentences": [
     { "text": "", "type": "fact|prediction|opinion", "confidence": 0.0 }
   ],
-  "summary": [ "要約1", "要約2" ],
+  "summary": ["要約1", "要約2"],
   "futureTree": "Root → ..."
 }
 
-記事本文：
-${articleInput.value}
+【入力データ】
+タイトル: ${title}
+新聞: ${source}
+日付: ${date}
+公開: ${publicFlag}
+
+本文:
+${body}
 `;
 
-  statusMessage.innerText = "生成中…";
+  document.getElementById("jsonOutput").innerText = "生成中…";
 
   const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
@@ -56,14 +58,19 @@ ${articleInput.value}
   });
 
   const data = await response.json();
+  console.log("OpenAI Response:", data);
 
   if (!data.output_text) {
-    statusMessage.innerText = "生成に失敗しました";
+    document.getElementById("jsonOutput").innerText = "生成失敗：API の返答がありません";
     return;
   }
 
-  jsonOutput.value = data.output_text.trim();
-  statusMessage.innerText = "JSON生成完了！";
+  // JSON 部分だけ抽出
+  const cleaned = data.output_text
+    .replace(/```json/g, "")
+    .replace(/```/g, "");
+
+  document.getElementById("jsonOutput").innerText = cleaned;
 });
 
 
@@ -72,50 +79,50 @@ ${articleInput.value}
 // ============================================================
 
 document.getElementById("uploadBtn").addEventListener("click", async () => {
+  const ghToken = document.getElementById("ghToken").value.trim();
+  const ghUser  = document.getElementById("ghUser").value.trim();
+  const ghRepo  = document.getElementById("ghRepo").value.trim();
+  const branch  = document.getElementById("ghBranch").value.trim();
 
-  const ghToken = ghTokenInput.value.trim();
+  const jsonText = document.getElementById("jsonOutput").innerText.trim();
+
   if (!ghToken) return alert("GitHub Token を入力してください");
+  if (!jsonText.startsWith("{")) return alert("JSON が生成されていません");
 
-  const jsonText = jsonOutput.value.trim();
-  if (!jsonText) return alert("JSONがありません");
-
-  // JSONパース確認
   let jsonObj;
   try {
     jsonObj = JSON.parse(jsonText);
   } catch (e) {
-    alert("JSON形式が不正です");
-    return;
+    return alert("JSON の形式が不正です");
   }
 
   const fileName = `${jsonObj.articleId}.json`;
-  const repo = "newsarchive";
-  const owner = "wasuke";
   const path = `data/${fileName}`;
 
-  statusMessage.innerText = "GitHubへアップロード中...";
+  document.getElementById("uploadResult").innerText = "アップロード中…";
 
   const uploadResponse = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contents/${path}`,
+    `https://api.github.com/repos/${ghUser}/${ghRepo}/contents/${path}`,
     {
       method: "PUT",
       headers: {
-        "Authorization": "token " + ghToken,
-        "Content-Type": "application/json"
+        "Authorization": `token ${ghToken}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        message: "Add article JSON " + fileName,
-        content: btoa(unescape(encodeURIComponent(jsonText))),
-        branch: "main"
+        message: `Add ${fileName}`,
+        content: btoa(unescape(encodeURIComponent(jsonText))), // UTF-8安全
+        branch: branch
       })
     }
   );
 
+  const resultBox = document.getElementById("uploadResult");
+
   if (uploadResponse.status === 201 || uploadResponse.status === 200) {
-    statusMessage.innerText = "GitHub アップロード成功（Actionsが list.json を更新します）";
+    resultBox.innerText = `アップロード成功！\nファイル名: ${fileName}`;
   } else {
     const err = await uploadResponse.json();
-    console.error(err);
-    statusMessage.innerText = "アップロード失敗";
+    resultBox.innerText = "アップロード失敗：\n" + JSON.stringify(err, null, 2);
   }
 });

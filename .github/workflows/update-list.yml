@@ -2,6 +2,8 @@ name: Update data/list.json automatically
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'data/*.json'
   workflow_dispatch:
@@ -16,6 +18,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -24,28 +28,30 @@ jobs:
 
       - name: Generate data/list.json
         run: |
-          node - << 'EOF'
+          echo "Generating list.json..."
+
+          node << 'EOF'
           const fs = require('fs');
           const path = require('path');
 
           const dir = 'data';
-
           if (!fs.existsSync(dir)) {
-            console.log('data directory not found.');
+            console.log("data folder not found");
             process.exit(0);
           }
 
-          const files = fs.readdirSync(dir)
-            .filter(f => f.endsWith('.json') && f !== 'list.json');
+          const files = fs.readdirSync(dir).filter(f =>
+            f.endsWith('.json') && f !== 'list.json'
+          );
 
           const list = files.map(f => {
-            const full = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf-8'));
+            const json = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
             return {
-              id: full.articleId,
-              title: full.title,
-              date: full.date,
-              source: full.source,
-              public: full.public ?? false,
+              id: json.articleId,
+              title: json.title,
+              date: json.date,
+              source: json.source,
+              public: json.public ?? false,
               file: `data/${f}`
             };
           });
@@ -54,17 +60,20 @@ jobs:
             path.join(dir, 'list.json'),
             JSON.stringify(list, null, 2)
           );
+          console.log("list.json generated.");
           EOF
 
-      - name: Commit updated list.json
+      - name: Commit changes
         run: |
-          if git diff --quiet; then
-            echo "No changes to commit"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/list.json
+
+          if git diff --cached --quiet; then
+            echo "No changes."
             exit 0
           fi
 
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/list.json
-          git commit -m "Update list.json via GitHub Actions"
+          git commit -m "Auto-update list.json"
           git push

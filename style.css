@@ -30,3 +30,23 @@ body {
 .type-opinion {
   border-left-color: #06c;
 }
+
+.badge-private {
+  display: inline-block;
+  padding: 2px 6px;
+  background: #777;
+  color: #fff;
+  font-size: 0.7em;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.claim-type.fact {
+  color: #2a6;
+}
+.claim-type.prediction {
+  color: #c63;
+}
+.claim-type.opinion {
+  color: #666;
+}

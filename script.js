@@ -1,3 +1,119 @@
+//---------------------------------------------
+// 文分類＋JSON生成（OpenAI API）
+//---------------------------------------------
+document.getElementById("generateJsonBtn").addEventListener("click", async () => {
+  const title = document.getElementById("titleInput").value.trim();
+  const source = document.getElementById("sourceInput").value.trim();
+  const date = document.getElementById("dateInput").value.trim();
+  const body = document.getElementById("bodyInput").value.trim();
+  const isPublic = document.getElementById("publicFlag").value;
+  const openaiKey = document.getElementById("openaiKey").value;
+
+  if (!title || !source || !date || !body) {
+    alert("記事データが不足しています。");
+    return;
+  }
+  if (!openaiKey) {
+    alert("OpenAI APIキーが必要です。");
+    return;
+  }
+
+  const sentences = body
+    .split(/(?<=[。！？\?])/)
+    .map(s => s.trim())
+    .filter(s => s.length > 0);
+
+  const classifications = [];
+
+  for (const sentence of sentences) {
+    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${openaiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: "文を fact, prediction, opinion のいずれかで分類してください。"
+          },
+          {
+            role: "user",
+            content: sentence
+          }
+        ]
+      })
+    }).then(r => r.json());
+
+    let cls = "fact";
+    try {
+      cls = res.choices[0].message.content.trim().toLowerCase();
+    } catch (_) {}
+
+    classifications.push({
+      sentence: sentence,
+      claimType: cls
+    });
+  }
+
+  const articleId = `${Date.now()}`;
+  const metadata = {
+    articleId: articleId,
+    title: title,
+    source: source,
+    date: date,
+    body: body,
+    public: isPublic === "true",
+    classifications: classifications
+  };
+
+  window.generatedJson = JSON.stringify(metadata, null, 2);
+  document.getElementById("jsonOutput").textContent = window.generatedJson;
+});
+
+//---------------------------------------------
+// GitHub ファイルアップロード
+//---------------------------------------------
+document.getElementById("uploadBtn").addEventListener("click", async () => {
+
+  if (!window.generatedJson) {
+    alert("先に JSON を生成してください。");
+    return;
+  }
+
+  const token = document.getElementById("ghToken").value;
+  const user = document.getElementById("ghUser").value;
+  const repo = document.getElementById("ghRepo").value;
+  const branch = document.getElementById("ghBranch").value;
+
+  if (!token) {
+    alert("GitHub Token が必要です。");
+    return;
+  }
+
+  const filename = `data/${JSON.parse(window.generatedJson).articleId}.json`;
+  const contentBase64 = btoa(unescape(encodeURIComponent(window.generatedJson)));
+
+  const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filename}`, {
+    method: "PUT",
+    headers: {
+      "Authorization": `Bearer ${token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      message: "Add new article JSON",
+      content: contentBase64,
+      branch: branch
+    })
+  });
+
+  const result = await res.json();
+  document.getElementById("uploadResult").textContent =
+    JSON.stringify(result, null, 2);
+});
+
 //------------------------------------------------------------
 // ページごとの処理を自動振り分け
 //------------------------------------------------------------

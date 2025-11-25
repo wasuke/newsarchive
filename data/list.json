@@ -62,5 +62,11 @@
     "source": "千葉日報",
     "public": false,
     "file": "data/20251121_tokyowan_earthquake.json"
+  },
+  {
+    "title": "駐日米国大使、X投稿「日米両国にとって、また一つ記念すべき出来事」に何事？→予想外の報告→フォロワー祝福「ありがとう、ジョージ！」",
+    "source": "中日スポーツ",
+    "public": false,
+    "file": "data/20251121_us_ambassador_followers.json"
   }
 ]

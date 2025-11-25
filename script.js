@@ -1,29 +1,22 @@
-console.log("script.js loaded!");
-
 // ============================================================
-//   常時管理者モード（全記事を表示）
+//   設定：常時管理者モード
 // ============================================================
 
 const ADMIN_MODE = true;
 
-
 // ============================================================
-//   記事一覧ページ処理
+//   DOM 読み込み時
 // ============================================================
 
 document.addEventListener("DOMContentLoaded", () => {
-  const listContainer = document.getElementById("articlesList");
-
-  if (listContainer) {
+  if (document.getElementById("articlesList")) {
     loadArticleList();
   }
 
-  const viewerContainer = document.getElementById("articleText");
-  if (viewerContainer) {
+  if (document.getElementById("articleText")) {
     loadArticleForViewer();
   }
 });
-
 
 // ============================================================
 //   記事一覧の読み込み
@@ -31,23 +24,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadArticleList() {
   try {
-    console.log("Fetching list.json...");
     const response = await fetch("./data/list.json");
 
     if (!response.ok) {
-      console.error("list.json を取得できませんでした:", response.status);
+      console.error("list.json 読み込みエラー:", response.status);
       return;
     }
 
     const list = await response.json();
-    console.log("list.json:", list);
-
     renderArticleList(list);
-  } catch (error) {
-    console.error("list.json 読み込みエラー:", error);
+
+  } catch (e) {
+    console.error("list.json エラー:", e);
   }
 }
-
 
 // ============================================================
 //   記事一覧の描画
@@ -57,9 +47,7 @@ function renderArticleList(list) {
   const container = document.getElementById("articlesList");
   container.innerHTML = "";
 
-  const visibleArticles = list;
-
-  visibleArticles.forEach(item => {
+  list.forEach(item => {
     const card = document.createElement("div");
     card.className = "article-card";
 
@@ -70,8 +58,7 @@ function renderArticleList(list) {
         </a>
       </h3>
       <p class="meta">
-        ${item.source || "（媒体不明）"}
-        ${item.date ? "｜" + item.date : ""}
+        ${item.source || ""}｜${item.date || ""}
         ${item.public === false ? `<span class="badge-private">非公開</span>` : ""}
       </p>
     `;
@@ -80,9 +67,8 @@ function renderArticleList(list) {
   });
 }
 
-
 // ============================================================
-//   記事ビューアの読み込み
+//   記事詳細の読み込み
 // ============================================================
 
 async function loadArticleForViewer() {
@@ -90,79 +76,82 @@ async function loadArticleForViewer() {
   const file = params.get("file");
 
   if (!file) {
-    document.getElementById("articleText").innerText = "ファイルが指定されていません";
+    document.getElementById("articleText").innerText = "ファイル指定なし";
     return;
   }
 
   try {
-    console.log("Loading article:", file);
-
     const response = await fetch("./" + file);
 
     if (!response.ok) {
-      document.getElementById("articleText").innerText =
-        "記事 JSON を読み込めませんでした：" + file;
+      document.getElementById("articleText").innerText = "読み込み失敗：" + file;
       return;
     }
 
     const article = await response.json();
     renderArticleViewer(article);
 
-  } catch (err) {
-    document.getElementById("articleText").innerText =
-      "エラーが発生しました：" + err;
+  } catch (e) {
+    document.getElementById("articleText").innerText = "エラー：" + e;
   }
 }
 
-
 // ============================================================
-//   記事ビューア UI の描画
+//   記事ビュー UI の描画
 // ============================================================
 
 function renderArticleViewer(article) {
+
+  // タイトル・メタデータ
   document.getElementById("articleTitle").innerText = article.title;
   document.getElementById("articleSource").innerText = article.source;
   document.getElementById("articleDate").innerText = article.date;
 
+  // 元記事本文
   const articleTextDiv = document.getElementById("articleText");
   articleTextDiv.innerHTML = "";
 
-  const sentences = article.text ? article.text.split(/(?<=[。！？\?])/g) : [];
+  const sentencesRaw = article.text
+    ? article.text.split(/(?<=[。！？\?])/g)
+    : [];
 
-  sentences.forEach((sentence, idx) => {
+  sentencesRaw.forEach(s => {
     const p = document.createElement("p");
-    p.innerText = sentence.trim();
+    p.innerText = s.trim();
     articleTextDiv.appendChild(p);
   });
 
-  const claimsContainer = document.getElementById("claimsList");
-  claimsContainer.innerHTML = "";
+  // 文メタデータ
+  const claims = document.getElementById("claimsList");
+  claims.innerHTML = "";
 
   if (article.sentences && Array.isArray(article.sentences)) {
-    article.sentences.forEach((s, idx) => {
+    article.sentences.forEach((s, i) => {
       const card = document.createElement("div");
       card.className = "claim-card";
 
       card.innerHTML = `
-        <div><strong>${idx + 1}.</strong> ${s.text}</div>
+        <div><strong>${i+1}.</strong> ${s.text}</div>
         <div>分類：<span class="claim-type ${s.type}">${s.type}</span></div>
-        <div>信頼度：${s.confidence || "N/A"}</div>
+        <div>信頼度：${s.confidence ?? "N/A"}</div>
       `;
 
-      claimsContainer.appendChild(card);
+      claims.appendChild(card);
     });
   }
 
-  const direction = document.getElementById("directionSummary");
-  direction.innerHTML = "";
+  // 方向性要約
+  const summary = article.summary || [];
+  const dir = document.getElementById("directionSummary");
+  dir.innerHTML = "";
 
-  const summary = article.summary || ["方向性のデータなし"];
   summary.forEach(item => {
     const li = document.createElement("li");
     li.innerText = item;
-    direction.appendChild(li);
+    dir.appendChild(li);
   });
 
-  const futureTree = document.getElementById("futureTreeText");
-  futureTree.innerText = article.futureTree || "No Future Tree.";
+  // FutureTree
+  document.getElementById("futureTreeText").innerText =
+    article.futureTree || "No Future Tree.";
 }

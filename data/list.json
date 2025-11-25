@@ -76,9 +76,5 @@
     "source": "テレ朝ニュース",
     "public": false,
     "file": "data/Old1764079845329.json"
-  },
-  {
-    "public": false,
-    "file": "data/Oldlist.json"
   }
 ]

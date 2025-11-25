@@ -2,7 +2,6 @@
 //   常時管理者モード（全記事を表示）
 // ============================================================
 
-// 管理者モードフラグ（今は常に true）
 const ADMIN_MODE = true;
 
 
@@ -13,12 +12,10 @@ const ADMIN_MODE = true;
 document.addEventListener("DOMContentLoaded", () => {
   const listContainer = document.getElementById("articlesList");
 
-  // index.html の場合だけ実行する
   if (listContainer) {
     loadArticleList();
   }
 
-  // 記事ビューアの場合
   const viewerContainer = document.getElementById("articleText");
   if (viewerContainer) {
     loadArticleForViewer();
@@ -32,14 +29,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadArticleList() {
   try {
-    const response = await fetch("data/list.json");
+    console.log("Fetching list.json...");
+    const response = await fetch("./data/list.json");
 
     if (!response.ok) {
-      console.error("list.json を取得できませんでした");
+      console.error("list.json を取得できませんでした:", response.status);
       return;
     }
 
     const list = await response.json();
+    console.log("list.json:", list);
 
     renderArticleList(list);
   } catch (error) {
@@ -56,7 +55,6 @@ function renderArticleList(list) {
   const container = document.getElementById("articlesList");
   container.innerHTML = "";
 
-  // 常時管理者モード → 全件表示
   const visibleArticles = list;
 
   visibleArticles.forEach(item => {
@@ -81,7 +79,6 @@ function renderArticleList(list) {
 }
 
 
-
 // ============================================================
 //   記事ビューアの読み込み
 // ============================================================
@@ -96,7 +93,9 @@ async function loadArticleForViewer() {
   }
 
   try {
-    const response = await fetch(file);
+    console.log("Loading article:", file);
+
+    const response = await fetch("./" + file);
 
     if (!response.ok) {
       document.getElementById("articleText").innerText =
@@ -114,19 +113,15 @@ async function loadArticleForViewer() {
 }
 
 
-
 // ============================================================
 //   記事ビューア UI の描画
 // ============================================================
 
 function renderArticleViewer(article) {
-
-  // 左ペイン：記事メタデータ
   document.getElementById("articleTitle").innerText = article.title;
   document.getElementById("articleSource").innerText = article.source;
   document.getElementById("articleDate").innerText = article.date;
 
-  // 本文（生テキスト）
   const articleTextDiv = document.getElementById("articleText");
   articleTextDiv.innerHTML = "";
 
@@ -138,7 +133,6 @@ function renderArticleViewer(article) {
     articleTextDiv.appendChild(p);
   });
 
-  // 中央ペイン：文ごとのメタデータ
   const claimsContainer = document.getElementById("claimsList");
   claimsContainer.innerHTML = "";
 
@@ -157,7 +151,6 @@ function renderArticleViewer(article) {
     });
   }
 
-  // 右ペイン：方向性（簡易）
   const direction = document.getElementById("directionSummary");
   direction.innerHTML = "";
 
@@ -168,13 +161,6 @@ function renderArticleViewer(article) {
     direction.appendChild(li);
   });
 
-  // Future Tree（テキスト）
   const futureTree = document.getElementById("futureTreeText");
   futureTree.innerText = article.futureTree || "No Future Tree.";
 }
-
-
-// ============================================================
-//   スタイル（必要なら追加してください）
-// ============================================================
-// .badge-private 用のCSSは style.css に記入

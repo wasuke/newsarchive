@@ -1,64 +1,32 @@
 body {
   font-family: sans-serif;
-  margin: 0;
+  padding: 20px;
 }
 
-header {
-  background: #333;
-  color: white;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.subtitle {
-  font-size: 0.9em;
-  opacity: 0.8;
-}
-
-main {
-  display: flex;
-  height: calc(100vh - 80px);
-}
-
-.pane {
-  overflow-y: scroll;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-.pane-left { width: 33%; background: #fafafa; }
-.pane-center { width: 33%; background: #fff; }
-.pane-right { width: 34%; background: #f8f8f8; }
-
-.claim-card {
-  border: 1px solid #ddd;
-  padding: 8px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-.claim-fact { border-left: 5px solid #2a9d8f; }
-.claim-analysis { border-left: 5px solid #e9c46a; }
-.claim-prediction { border-left: 5px solid #e76f51; }
-
-.prediction-node {
-  border: 1px solid #ccc;
+.news-item {
   padding: 10px;
-  border-radius: 8px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sentence-block {
   margin-bottom: 10px;
-  background: #fff;
+  padding: 6px;
+  border-left: 6px solid #bbb;
+  background: #f9f9f9;
 }
 
-.summary-card {
-  background: white;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 20px;
+.sentence-block .label {
+  float: right;
+  font-size: 0.8em;
+  color: #555;
 }
 
-.article-text p {
-  margin: 5px 0;
+.type-fact {
+  border-left-color: #2b8;
+}
+.type-prediction {
+  border-left-color: #d80;
+}
+.type-opinion {
+  border-left-color: #06c;
 }

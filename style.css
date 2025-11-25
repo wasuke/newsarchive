@@ -1,52 +1,58 @@
 body {
   font-family: sans-serif;
   padding: 20px;
+  line-height: 1.6;
 }
 
-.news-item {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
+header {
+  margin-bottom: 20px;
 }
 
-.sentence-block {
-  margin-bottom: 10px;
-  padding: 6px;
-  border-left: 6px solid #bbb;
-  background: #f9f9f9;
-}
-
-.sentence-block .label {
-  float: right;
-  font-size: 0.8em;
-  color: #555;
-}
-
-.type-fact {
-  border-left-color: #2b8;
-}
-.type-prediction {
-  border-left-color: #d80;
-}
-.type-opinion {
-  border-left-color: #06c;
+.meta {
+  color: #666;
 }
 
 .badge-private {
-  display: inline-block;
-  padding: 2px 6px;
-  background: #777;
+  background: #c00;
   color: #fff;
-  font-size: 0.7em;
+  padding: 2px 6px;
+  font-size: 0.8em;
   border-radius: 4px;
-  margin-left: 4px;
+}
+
+.article-card {
+  background: #f7f7f7;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+}
+
+.viewer-layout {
+  display: flex;
+  gap: 20px;
+}
+
+.pane {
+  flex: 1;
+  background: #fafafa;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.claim-card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px;
+  margin-bottom: 8px;
+  border-radius: 6px;
 }
 
 .claim-type.fact {
-  color: #2a6;
+  color: #007700;
 }
 .claim-type.prediction {
-  color: #c63;
+  color: #cc8800;
 }
 .claim-type.opinion {
-  color: #666;
+  color: #0066cc;
 }

@@ -1,218 +1,180 @@
-// URLパラメータで admin=1 をつけた時、非公開記事も表示
-function isAdminMode() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("admin") === "1";
-}
-//---------------------------------------------
-// 文分類＋JSON生成（OpenAI API）
-//---------------------------------------------
-document.getElementById("generateJsonBtn").addEventListener("click", async () => {
-  const title = document.getElementById("titleInput").value.trim();
-  const source = document.getElementById("sourceInput").value.trim();
-  const date = document.getElementById("dateInput").value.trim();
-  const body = document.getElementById("bodyInput").value.trim();
-  const isPublic = document.getElementById("publicFlag").value;
-  const openaiKey = document.getElementById("openaiKey").value;
+// ============================================================
+//   常時管理者モード（全記事を表示）
+// ============================================================
 
-  if (!title || !source || !date || !body) {
-    alert("記事データが不足しています。");
-    return;
-  }
-  if (!openaiKey) {
-    alert("OpenAI APIキーが必要です。");
-    return;
-  }
+// 管理者モードフラグ（今は常に true）
+const ADMIN_MODE = true;
 
-  const sentences = body
-    .split(/(?<=[。！？\?])/)
-    .map(s => s.trim())
-    .filter(s => s.length > 0);
 
-  const classifications = [];
+// ============================================================
+//   記事一覧ページ処理
+// ============================================================
 
-  for (const sentence of sentences) {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${openaiKey}`
-      },
-      body: JSON.stringify({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: "文を fact, prediction, opinion のいずれかで分類してください。"
-          },
-          {
-            role: "user",
-            content: sentence
-          }
-        ]
-      })
-    }).then(r => r.json());
-
-    let cls = "fact";
-    try {
-      cls = res.choices[0].message.content.trim().toLowerCase();
-    } catch (_) {}
-
-    classifications.push({
-      sentence: sentence,
-      claimType: cls
-    });
-  }
-
-  const articleId = `${Date.now()}`;
-  const metadata = {
-    articleId: articleId,
-    title: title,
-    source: source,
-    date: date,
-    body: body,
-    public: isPublic === "true",
-    classifications: classifications
-  };
-
-  window.generatedJson = JSON.stringify(metadata, null, 2);
-  document.getElementById("jsonOutput").textContent = window.generatedJson;
-});
-
-//---------------------------------------------
-// GitHub ファイルアップロード
-//---------------------------------------------
-document.getElementById("uploadBtn").addEventListener("click", async () => {
-
-  if (!window.generatedJson) {
-    alert("先に JSON を生成してください。");
-    return;
-  }
-
-  const token = document.getElementById("ghToken").value;
-  const user = document.getElementById("ghUser").value;
-  const repo = document.getElementById("ghRepo").value;
-  const branch = document.getElementById("ghBranch").value;
-
-  if (!token) {
-    alert("GitHub Token が必要です。");
-    return;
-  }
-
-  const filename = `data/${JSON.parse(window.generatedJson).articleId}.json`;
-  const contentBase64 = btoa(unescape(encodeURIComponent(window.generatedJson)));
-
-  const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${filename}`, {
-    method: "PUT",
-    headers: {
-      "Authorization": `Bearer ${token}`,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      message: "Add new article JSON",
-      content: contentBase64,
-      branch: branch
-    })
-  });
-
-  const result = await res.json();
-  document.getElementById("uploadResult").textContent =
-    JSON.stringify(result, null, 2);
-});
-
-//------------------------------------------------------------
-// ページごとの処理を自動振り分け
-//------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
-  const path = window.location.pathname;
+  const listContainer = document.getElementById("articlesList");
 
-  if (path.endsWith("index.html") || path.endsWith("/")) {
-    loadIndexPage();
-  } else if (path.endsWith("article_viewer.html")) {
-    loadArticleViewerPage();
+  // index.html の場合だけ実行する
+  if (listContainer) {
+    loadArticleList();
+  }
+
+  // 記事ビューアの場合
+  const viewerContainer = document.getElementById("articleText");
+  if (viewerContainer) {
+    loadArticleForViewer();
   }
 });
 
-//------------------------------------------------------------
-// INDEX PAGE：記事一覧を読み込む
-//------------------------------------------------------------
-async function loadIndexPage() {
-  const listDiv = document.getElementById("newsList");
 
+// ============================================================
+//   記事一覧の読み込み
+// ============================================================
+
+async function loadArticleList() {
   try {
-    const res = await fetch("data/list.json");
-    const list = await res.json();
+    const response = await fetch("data/list.json");
 
-    // 公開フラグが true の記事だけ表示
-    //const publicArticles = list.filter(a => a.public !== false);
-    let visibleArticles;
-    if (isAdminMode()) {
-    // 管理者: 全件表示
-      visibleArticles = list;
-    } else {
-    // 通常: public=true のみ表示
-      visibleArticles = list.filter(a => a.public === true);
-    }
-
-    if (publicArticles.length === 0) {
-      listDiv.innerHTML = "<p>公開記事がありません。</p>";
+    if (!response.ok) {
+      console.error("list.json を取得できませんでした");
       return;
     }
 
-    const html = publicArticles.map(item => `
-      <div class="news-item">
-        <a href="article_viewer.html?id=${item.id}">
-          <strong>${item.title}</strong><br>
-          <span>${item.date}｜${item.source}</span>
-        </a>
-      </div>
-    `).join("");
+    const list = await response.json();
 
-    listDiv.innerHTML = html;
-
-  } catch (err) {
-    listDiv.innerHTML = "<p>一覧を読み込めませんでした。</p>";
-    console.error(err);
+    renderArticleList(list);
+  } catch (error) {
+    console.error("list.json 読み込みエラー:", error);
   }
 }
 
-//------------------------------------------------------------
-// ARTICLE VIEWER：JSON を読み込み表示
-//------------------------------------------------------------
-async function loadArticleViewerPage() {
-  const container = document.getElementById("articleContainer");
-  const id = new URLSearchParams(location.search).get("id");
 
-  if (!id) {
-    container.innerHTML = "<p>記事IDが指定されていません。</p>";
+// ============================================================
+//   記事一覧の描画
+// ============================================================
+
+function renderArticleList(list) {
+  const container = document.getElementById("articlesList");
+  container.innerHTML = "";
+
+  // 常時管理者モード → 全件表示
+  const visibleArticles = list;
+
+  visibleArticles.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "article-card";
+
+    card.innerHTML = `
+      <h3>
+        <a href="article_viewer.html?file=${encodeURIComponent(item.file)}">
+          ${item.title}
+        </a>
+      </h3>
+      <p class="meta">
+        ${item.source || "（媒体不明）"}
+        ${item.date ? "｜" + item.date : ""}
+        ${item.public === false ? `<span class="badge-private">非公開</span>` : ""}
+      </p>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+
+
+// ============================================================
+//   記事ビューアの読み込み
+// ============================================================
+
+async function loadArticleForViewer() {
+  const params = new URLSearchParams(window.location.search);
+  const file = params.get("file");
+
+  if (!file) {
+    document.getElementById("articleText").innerText = "ファイルが指定されていません";
     return;
   }
 
   try {
-    const res = await fetch(`data/${id}.json`);
-    const article = await res.json();
+    const response = await fetch(file);
 
-    const sentencesHTML = article.classifications
-      .map(c => `
-        <div class="sentence-block type-${c.claimType}">
-          <span class="sentence">${c.sentence}</span>
-          <span class="label">${c.claimType}</span>
-        </div>
-      `)
-      .join("");
+    if (!response.ok) {
+      document.getElementById("articleText").innerText =
+        "記事 JSON を読み込めませんでした：" + file;
+      return;
+    }
 
-    container.innerHTML = `
-      <h2>${article.title}</h2>
-      <p>${article.date}｜${article.source}</p>
-      <hr>
-      <h3>本文（文＋分類）</h3>
-      ${sentencesHTML}
-      <hr>
-      <h3>本文テキスト（研究用）</h3>
-      <pre>${article.body}</pre>
-    `;
+    const article = await response.json();
+    renderArticleViewer(article);
 
   } catch (err) {
-    container.innerHTML = "<p>記事JSONを読み込めませんでした。</p>";
-    console.error(err);
+    document.getElementById("articleText").innerText =
+      "エラーが発生しました：" + err;
   }
 }
+
+
+
+// ============================================================
+//   記事ビューア UI の描画
+// ============================================================
+
+function renderArticleViewer(article) {
+
+  // 左ペイン：記事メタデータ
+  document.getElementById("articleTitle").innerText = article.title;
+  document.getElementById("articleSource").innerText = article.source;
+  document.getElementById("articleDate").innerText = article.date;
+
+  // 本文（生テキスト）
+  const articleTextDiv = document.getElementById("articleText");
+  articleTextDiv.innerHTML = "";
+
+  const sentences = article.text ? article.text.split(/(?<=[。！？\?])/g) : [];
+
+  sentences.forEach((sentence, idx) => {
+    const p = document.createElement("p");
+    p.innerText = sentence.trim();
+    articleTextDiv.appendChild(p);
+  });
+
+  // 中央ペイン：文ごとのメタデータ
+  const claimsContainer = document.getElementById("claimsList");
+  claimsContainer.innerHTML = "";
+
+  if (article.sentences && Array.isArray(article.sentences)) {
+    article.sentences.forEach((s, idx) => {
+      const card = document.createElement("div");
+      card.className = "claim-card";
+
+      card.innerHTML = `
+        <div><strong>${idx + 1}.</strong> ${s.text}</div>
+        <div>分類：<span class="claim-type ${s.type}">${s.type}</span></div>
+        <div>信頼度：${s.confidence || "N/A"}</div>
+      `;
+
+      claimsContainer.appendChild(card);
+    });
+  }
+
+  // 右ペイン：方向性（簡易）
+  const direction = document.getElementById("directionSummary");
+  direction.innerHTML = "";
+
+  const summary = article.summary || ["方向性のデータなし"];
+  summary.forEach(item => {
+    const li = document.createElement("li");
+    li.innerText = item;
+    direction.appendChild(li);
+  });
+
+  // Future Tree（テキスト）
+  const futureTree = document.getElementById("futureTreeText");
+  futureTree.innerText = article.futureTree || "No Future Tree.";
+}
+
+
+// ============================================================
+//   スタイル（必要なら追加してください）
+// ============================================================
+// .badge-private 用のCSSは style.css に記入

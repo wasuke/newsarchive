@@ -19,7 +19,7 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   if (!apiKey) return alert("OpenAI APIキーを入力してください");
 
   const prompt = `
-以下は新聞記事です。これを次の統一スキーマJSONに変換してください。
+以下の新聞記事を次のスキーマに従ってJSON化してください：
 
 【新スキーマ】
 {
@@ -32,10 +32,7 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
   "sentences": [
     { "text": "", "type": "fact|prediction|opinion", "confidence": 0.0 }
   ],
-  "summary": [
-    "要約1",
-    "要約2"
-  ],
+  "summary": [ "要約1", "要約2" ],
   "futureTree": "Root → ..."
 }
 
@@ -43,9 +40,9 @@ document.getElementById("generateBtn").addEventListener("click", async () => {
 ${articleInput.value}
 `;
 
-  statusMessage.innerText = "生成中...";
+  statusMessage.innerText = "生成中…";
 
-  const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  const response = await fetch("https://api.openai.com/v1/responses", {
     method: "POST",
     headers: {
       "Authorization": "Bearer " + apiKey,
@@ -53,24 +50,20 @@ ${articleInput.value}
     },
     body: JSON.stringify({
       model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
-      temperature: 0
+      input: prompt,
+      max_output_tokens: 4096
     })
   });
 
   const data = await response.json();
-  if (!data.choices) {
-    statusMessage.innerText = "生成失敗";
+
+  if (!data.output_text) {
+    statusMessage.innerText = "生成に失敗しました";
     return;
   }
 
-  let content = data.choices[0].message.content.trim();
-
-  // JSONだけ抽出（```json ...```形式を許容）
-  content = content.replace(/```json/g, "").replace(/```/g, "");
-
-  jsonOutput.value = content;
-  statusMessage.innerText = "JSON生成完了（必要なら編集してください）";
+  jsonOutput.value = data.output_text.trim();
+  statusMessage.innerText = "JSON生成完了！";
 });
 
 

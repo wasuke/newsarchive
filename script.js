@@ -1,3 +1,8 @@
+// URLパラメータで admin=1 をつけた時、非公開記事も表示
+function isAdminMode() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("admin") === "1";
+}
 //---------------------------------------------
 // 文分類＋JSON生成（OpenAI API）
 //---------------------------------------------
@@ -138,7 +143,15 @@ async function loadIndexPage() {
     const list = await res.json();
 
     // 公開フラグが true の記事だけ表示
-    const publicArticles = list.filter(a => a.public !== false);
+    //const publicArticles = list.filter(a => a.public !== false);
+    let visibleArticles;
+    if (isAdminMode()) {
+    // 管理者: 全件表示
+      visibleArticles = list;
+    } else {
+    // 通常: public=true のみ表示
+      visibleArticles = list.filter(a => a.public === true);
+    }
 
     if (publicArticles.length === 0) {
       listDiv.innerHTML = "<p>公開記事がありません。</p>";

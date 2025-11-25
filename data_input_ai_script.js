@@ -47,8 +47,7 @@ async function generateJsonWithAI() {
       body: JSON.stringify({
         model: "gpt-4.1-mini",
         input: prompt,
-        max_output_tokens: 2000,
-		text: { format: "json" }
+        max_output_tokens: 2000
       })
     });
 

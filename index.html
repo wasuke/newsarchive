@@ -1,142 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>ニュース一覧（事実・分析・予測）</title>
+  <meta charset="UTF-8" />
+  <title>ニュース記事一覧</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    body { font-family: sans-serif; padding: 20px; }
-
-    h1 { margin-bottom: 10px; }
-
-    .filter-area {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .articles {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .card {
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      background: white;
-    }
-
-    /* 色分け */
-    .fact       { border-left: 6px solid #2a9d8f; }   /* 緑 */
-    .analysis   { border-left: 6px solid #e9c46a; }   /* 黄 */
-    .prediction { border-left: 6px solid #e76f51; }   /* 赤 */
-    .mixed      { border-left: 6px solid #6a4c93; }   /* 紫 */
-
-    .card-title {
-      font-size: 1.1em;
-      font-weight: bold;
-      margin: 0 0 8px 0;
-    }
-
-    .summary { margin: 5px 0 10px 0; color: #333; }
-    .meta { font-size: 0.9em; color: #666; }
-  </style>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h1>ニュース一覧（事実・分析・予測）</h1>
+<header>
+  <h1>ニュース記事一覧（自動更新）</h1>
+  <p>GitHub Actions により data フォルダから自動生成されています。</p>
+</header>
 
-<div class="filter-area">
-  <label>
-    種別：
-    <select id="articleTypeFilter">
-      <option value="all">すべて</option>
-      <option value="fact">事実</option>
-      <option value="analysis">分析</option>
-      <option value="prediction">予測中心</option>
-      <option value="mixed">混在</option>
-    </select>
-  </label>
+<main>
+  <div id="newsList"></div>
+</main>
 
-  <label>
-    キーワード：
-    <input type="text" id="keywordInput" placeholder="例：パンダ・米価・インバウンド…">
-  </label>
-</div>
-
-<div id="articles" class="articles"></div>
-
-<script>
-// 一覧に読み込む JSON ファイル
-const files = [
-  "11251340_d147d615.json",
-  "20251114_rice_price.json",
-  "20251121_tokyowan_earthquake.json",
-  "20251121_ip_phone_scam.json",
-  "20251121_us_ambassador_followers.json",
-  "20251121_china_pressure_japan.json"
-];
-
-async function loadArticles() {
-  const articles = [];
-
-  for (const f of files) {
-    const res = await fetch("./data/" + f);
-    const json = await res.json();
-    articles.push(json);
-  }
-
-  window.allArticles = articles;
-  renderList();
-}
-
-function renderList() {
-  const typeFilter = document.getElementById("articleTypeFilter").value;
-  const keyword = document.getElementById("keywordInput").value.trim();
-
-  const container = document.getElementById("articles");
-  container.innerHTML = "";
-
-  const list = window.allArticles.filter(a => {
-    // タイプフィルタ
-    if (typeFilter !== "all" && a.articleType !== typeFilter) return false;
-
-    // キーワードフィルタ（タイトル・summaryにかかる）
-    if (keyword) {
-      const text = (a.title + a.summary).toLowerCase();
-      if (!text.includes(keyword.toLowerCase())) return false;
-    }
-
-    return true;
-  });
-
-  list.forEach(a => {
-    const card = document.createElement("div");
-    card.className = `card ${a.articleType}`;
-
-    card.innerHTML = `
-      <div class="card-title">
-        <a href="./article_viewer.html?id=${a.id}">${a.title}</a>
-      </div>
-      <div class="summary">${a.summary}</div>
-      <div class="meta">媒体：${a.source} / 配信：${a.publishedAt}</div>
-      <div class="meta">タイプ：${a.articleType}</div>
-    `;
-
-    container.appendChild(card);
-  });
-}
-
-document.getElementById("articleTypeFilter").addEventListener("change", renderList);
-document.getElementById("keywordInput").addEventListener("input", renderList);
-
-loadArticles();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

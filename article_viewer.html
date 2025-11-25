@@ -1,81 +1,21 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>ニュース事実・予測ビューア（試作）</title>
+  <meta charset="UTF-8" />
+  <title>記事ビューア</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header>
-  <div class="header-left">
-    <h1>ニュース事実・予測ビューア（試作）</h1>
-    <p class="subtitle">元記事・文メタデータ・予測の方向性を同時表示</p>
-  </div>
-  <div class="header-right">
-    <label>
-      キーワード検索：
-      <input type="text" id="keywordInput" placeholder="例：投げ売り・需給・25年産…">
-    </label>
-    <label>
-      種別：
-      <select id="claimTypeFilter">
-        <option value="all">すべて</option>
-        <option value="fact">事実</option>
-        <option value="analysis">意見・分析</option>
-        <option value="prediction">予測</option>
-      </select>
-    </label>
-  </div>
+  <h1>記事ビューア</h1>
+  <p>文ごとの fact / prediction / opinion も表示します。</p>
 </header>
 
 <main>
-  <!-- 左：元記事 -->
-  <section class="pane pane-left">
-    <h2>元記事</h2>
-    <div class="article-meta">
-      <div>タイトル：<span id="articleTitle"></span></div>
-      <div>媒体：<span id="articleSource"></span></div>
-      <div>配信日時：<span id="articleDate"></span></div>
-    </div>
-    <hr>
-
-    <div id="articleText" class="article-text">
-      <!-- JSで文章を文単位に埋め込む -->
-    </div>
-  </section>
-
-  <!-- 中央：文ごとのメタデータ -->
-  <section class="pane pane-center">
-    <h2>文メタデータ</h2>
-    <div class="claims-list" id="claimsList"></div>
-  </section>
-
-  <!-- 右：予測と全体方向性 -->
-  <section class="pane pane-right">
-    <h2>予測・方向性ビュー</h2>
-
-    <div class="summary-card">
-      <h3>このニュースのざっくり方向性</h3>
-      <ul id="directionSummary"></ul>
-    </div>
-
-    <div class="summary-card">
-      <h3>予測リスト</h3>
-      <div id="predictionsList"></div>
-    </div>
-
-    <div class="summary-card">
-      <h3>Future Tree（簡易）</h3>
-      <pre id="futureTreeText"></pre>
-    </div>
-  </section>
+  <div id="articleContainer"></div>
 </main>
-
-<footer>
-  <p>ニュース JSON ベースのビューア（試作）</p>
-</footer>
 
 <script src="script.js"></script>
 </body>

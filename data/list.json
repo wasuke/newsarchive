@@ -1,0 +1,53 @@
+{
+  "content": {
+    "name": "1764078697891.json",
+    "path": "data/1764078697891.json",
+    "sha": "6b9737d1f56b2179c118559d4862962e6229e5f6",
+    "size": 4318,
+    "url": "https://api.github.com/repos/wasuke/newsarchive/contents/data/1764078697891.json?ref=main",
+    "html_url": "https://github.com/wasuke/newsarchive/blob/main/data/1764078697891.json",
+    "git_url": "https://api.github.com/repos/wasuke/newsarchive/git/blobs/6b9737d1f56b2179c118559d4862962e6229e5f6",
+    "download_url": "https://raw.githubusercontent.com/wasuke/newsarchive/main/data/1764078697891.json",
+    "type": "file",
+    "_links": {
+      "self": "https://api.github.com/repos/wasuke/newsarchive/contents/data/1764078697891.json?ref=main",
+      "git": "https://api.github.com/repos/wasuke/newsarchive/git/blobs/6b9737d1f56b2179c118559d4862962e6229e5f6",
+      "html": "https://github.com/wasuke/newsarchive/blob/main/data/1764078697891.json"
+    }
+  },
+  "commit": {
+    "sha": "361a1c778a986646927649fe183d0ce31b6433e4",
+    "node_id": "C_kwDOQZXiMNoAKDM2MWExYzc3OGE5ODY2NDY5Mjc2NDlmZTE4M2QwY2UzMWI2NDMzZTQ",
+    "url": "https://api.github.com/repos/wasuke/newsarchive/git/commits/361a1c778a986646927649fe183d0ce31b6433e4",
+    "html_url": "https://github.com/wasuke/newsarchive/commit/361a1c778a986646927649fe183d0ce31b6433e4",
+    "author": {
+      "name": "wasuke",
+      "email": "cu11734@fsc.chubu.ac.jp",
+      "date": "2025-11-25T13:52:22Z"
+    },
+    "committer": {
+      "name": "wasuke",
+      "email": "cu11734@fsc.chubu.ac.jp",
+      "date": "2025-11-25T13:52:22Z"
+    },
+    "tree": {
+      "sha": "e82a4f53fd970291141165cf336c1e39836bb412",
+      "url": "https://api.github.com/repos/wasuke/newsarchive/git/trees/e82a4f53fd970291141165cf336c1e39836bb412"
+    },
+    "message": "Add new article JSON",
+    "parents": [
+      {
+        "sha": "8c0474c4ba08493f97cef6641cff06f8045e2b12",
+        "url": "https://api.github.com/repos/wasuke/newsarchive/git/commits/8c0474c4ba08493f97cef6641cff06f8045e2b12",
+        "html_url": "https://github.com/wasuke/newsarchive/commit/8c0474c4ba08493f97cef6641cff06f8045e2b12"
+      }
+    ],
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  }
+}

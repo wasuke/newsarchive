@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>ニュース記事 JSON 生成＆GitHub アップロード</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    textarea { width: 100%; height: 120px; margin-bottom: 10px; }
+    input, button { padding: 8px; margin: 5px 0; width: 100%; }
+    .section { margin-top: 30px; }
+    .result-box { white-space: pre-wrap; background: #f7f7f7; padding: 10px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+<h1>ニュース JSON 生成 ＋ GitHub アップロード（試作）</h1>
+
+<div class="section">
+  <h2>① 記事データ入力</h2>
+  <label>タイトル</label>
+  <input id="titleInput" type="text" />
+
+  <label>新聞名</label>
+  <input id="sourceInput" type="text" />
+
+  <label>日付</label>
+  <input id="dateInput" type="text" placeholder="例: 2025-11-21" />
+
+  <label>本文</label>
+  <textarea id="bodyInput"></textarea>
+
+  <label>公開可否（デフォルト false）</label>
+  <select id="publicFlag">
+    <option value="false" selected>非公開</option>
+    <option value="true">公開</option>
+  </select>
+
+  <h3>OpenAI APIキー</h3>
+  <input id="openaiKey" type="password" placeholder="sk-xxxx 形式" />
+</div>
+
+<div class="section">
+  <button id="generateJsonBtn">JSON を生成（AI分類）</button>
+</div>
+
+<div class="section">
+  <h2>② 生成された JSON</h2>
+  <div id="jsonOutput" class="result-box">(未生成)</div>
+</div>
+
+<div class="section">
+  <h2>③ GitHub へアップロード</h2>
+
+  <label>GitHub Token（repo権限必須）</label>
+  <input id="ghToken" type="password" />
+
+  <label>GitHub User</label>
+  <input id="ghUser" type="text" value="wasuke" />
+
+  <label>Repository</label>
+  <input id="ghRepo" type="text" value="newsarchive" />
+
+  <label>Branch</label>
+  <input id="ghBranch" type="text" value="main" />
+
+  <button id="uploadBtn">GitHub へアップロード</button>
+
+  <div id="uploadResult" class="result-box"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -18,16 +18,19 @@
 
 <main class="viewer-layout">
 
+  <!-- 左：元記事 -->
   <section class="pane pane-left">
     <h2>元記事</h2>
     <div id="articleText"></div>
   </section>
 
+  <!-- 中央：文メタデータ -->
   <section class="pane pane-center">
     <h2>文メタデータ</h2>
     <div id="claimsList"></div>
   </section>
 
+  <!-- 右：方向性 -->
   <section class="pane pane-right">
     <h2>方向性</h2>
 
@@ -44,6 +47,96 @@
 
 </main>
 
-<script src="./script.js"></script>
+<script>
+// ==================================================================
+//   記事ビューア：新スキーマ対応（body / classifications）
+// ==================================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadArticleForViewer();
+});
+
+// ------------------------------------------------------------
+//   記事 JSON を読み込み
+// ------------------------------------------------------------
+async function loadArticleForViewer() {
+  const params = new URLSearchParams(window.location.search);
+  const file = params.get("file");
+
+  if (!file) {
+    document.getElementById("articleText").innerText = "ファイルが指定されていません。";
+    return;
+  }
+
+  try {
+    const response = await fetch(file);
+    if (!response.ok) {
+      document.getElementById("articleText").innerText =
+        "記事 JSON を読み込めません：" + file;
+      return;
+    }
+
+    const article = await response.json();
+    renderArticle(article);
+
+  } catch (err) {
+    document.getElementById("articleText").innerText =
+      "読み込みエラー：" + err;
+  }
+}
+
+
+// ------------------------------------------------------------
+//   記事の表示（新スキーマ）
+// ------------------------------------------------------------
+function renderArticle(article) {
+
+  // ----- タイトル等 -----
+  document.getElementById("articleTitle").innerText = article.title || "(タイトルなし)";
+  document.getElementById("articleSource").innerText = article.source || "";
+  document.getElementById("articleDate").innerText = article.date || "";
+
+  // ----- 本文：article.body -----
+  const articleTextDiv = document.getElementById("articleText");
+  articleTextDiv.innerHTML = "";
+
+  if (article.body) {
+    const sentences = article.body.split(/(?<=[。！？\?])/g);
+    sentences.forEach(s => {
+      const p = document.createElement("p");
+      p.innerText = s.trim();
+      articleTextDiv.appendChild(p);
+    });
+  }
+
+  // ----- 文メタデータ：article.classifications -----
+  const claimsContainer = document.getElementById("claimsList");
+  claimsContainer.innerHTML = "";
+
+  if (article.classifications && Array.isArray(article.classifications)) {
+    article.classifications.forEach((c, idx) => {
+      const card = document.createElement("div");
+      card.className = "claim-card";
+
+      card.innerHTML = `
+        <div><strong>${idx + 1}.</strong> ${c.sentence}</div>
+        <div>分類：<span class="claim-type">${c.claimType}</span></div>
+      `;
+
+      claimsContainer.appendChild(card);
+    });
+  }
+
+  // ----- 要約（まだ生成していないため仮表示） -----
+  const direction = document.getElementById("directionSummary");
+  direction.innerHTML = "<li>要約データは未生成です</li>";
+
+  // ----- Future Tree（これも未生成） -----
+  const ft = document.getElementById("futureTreeText");
+  ft.innerText = "No Future Tree.";
+}
+
+</script>
+
 </body>
 </html>

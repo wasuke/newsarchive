@@ -66,12 +66,25 @@ ${body}
   }
 
   // JSON 部分だけ抽出
-  const cleaned = data.output_text
+  // JSON 部分だけ抽出
+  let aiText = "";
+  
+  try {
+    // /v1/responses の正しい構造
+    aiText = data.output[0].content[0].text;
+  } catch (e) {
+    document.getElementById("jsonOutput").innerText =
+      "生成失敗：API レスポンスの形式が想定と違います。\n" +
+      JSON.stringify(data, null, 2);
+    return;
+  }
+  
+  const cleaned = aiText
     .replace(/```json/g, "")
-    .replace(/```/g, "");
-
+    .replace(/```/g, "")
+    .trim();
+  
   document.getElementById("jsonOutput").innerText = cleaned;
-});
 
 
 // ============================================================

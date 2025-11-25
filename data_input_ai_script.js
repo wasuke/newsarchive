@@ -48,7 +48,7 @@ async function generateJsonWithAI() {
         model: "gpt-4.1-mini",
         input: prompt,
         max_output_tokens: 2000,
-        response_format: { type: "json_object" }
+		text: { format: "json" }
       })
     });
 

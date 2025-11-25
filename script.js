@@ -1,144 +1,89 @@
-// URL ?id=xxxxx に対応
-async function loadArticle() {
-  const params = new URLSearchParams(location.search);
-  const id = params.get("id");
+//------------------------------------------------------------
+// ページごとの処理を自動振り分け
+//------------------------------------------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const path = window.location.pathname;
+
+  if (path.endsWith("index.html") || path.endsWith("/")) {
+    loadIndexPage();
+  } else if (path.endsWith("article_viewer.html")) {
+    loadArticleViewerPage();
+  }
+});
+
+//------------------------------------------------------------
+// INDEX PAGE：記事一覧を読み込む
+//------------------------------------------------------------
+async function loadIndexPage() {
+  const listDiv = document.getElementById("newsList");
+
+  try {
+    const res = await fetch("data/list.json");
+    const list = await res.json();
+
+    // 公開フラグが true の記事だけ表示
+    const publicArticles = list.filter(a => a.public !== false);
+
+    if (publicArticles.length === 0) {
+      listDiv.innerHTML = "<p>公開記事がありません。</p>";
+      return;
+    }
+
+    const html = publicArticles.map(item => `
+      <div class="news-item">
+        <a href="article_viewer.html?id=${item.id}">
+          <strong>${item.title}</strong><br>
+          <span>${item.date}｜${item.source}</span>
+        </a>
+      </div>
+    `).join("");
+
+    listDiv.innerHTML = html;
+
+  } catch (err) {
+    listDiv.innerHTML = "<p>一覧を読み込めませんでした。</p>";
+    console.error(err);
+  }
+}
+
+//------------------------------------------------------------
+// ARTICLE VIEWER：JSON を読み込み表示
+//------------------------------------------------------------
+async function loadArticleViewerPage() {
+  const container = document.getElementById("articleContainer");
+  const id = new URLSearchParams(location.search).get("id");
 
   if (!id) {
-    document.body.innerHTML = "<h2>記事IDが指定されていません</h2>";
+    container.innerHTML = "<p>記事IDが指定されていません。</p>";
     return;
   }
 
-  // ★★★ ここが重要（すべての原因がここに集約） ★★★
-  const file = `./data/${id}.json`;
+  try {
+    const res = await fetch(`data/${id}.json`);
+    const article = await res.json();
 
-  const res = await fetch(file);
-  const json = await res.json();
+    const sentencesHTML = article.classifications
+      .map(c => `
+        <div class="sentence-block type-${c.claimType}">
+          <span class="sentence">${c.sentence}</span>
+          <span class="label">${c.claimType}</span>
+        </div>
+      `)
+      .join("");
 
-  window.currentArticle = json;
-
-  renderArticle(json);
-  renderClaims(json.claims);
-  renderPredictions(json.predictions);
-  renderFutureTree(json.futureTree);
-  renderDirectionSummary(json);
-}
-
-// ---------------------------
-// 元記事欄（左）
-// ---------------------------
-function renderArticle(article) {
-  document.getElementById("articleTitle").textContent = article.title;
-  document.getElementById("articleSource").textContent = article.source;
-  document.getElementById("articleDate").textContent = article.publishedAt;
-
-  const articleTextEl = document.getElementById("articleText");
-  articleTextEl.innerHTML = "";
-
-  // 今回は全文を claims の text から再構成
-  article.claims.forEach((c, index) => {
-    const p = document.createElement("p");
-    p.textContent = c.text;
-    p.className = "article-sentence";
-    p.dataset.index = index;
-    articleTextEl.appendChild(p);
-  });
-}
-
-// ---------------------------
-// 中央：文メタデータ
-// ---------------------------
-function renderClaims(claims) {
-  const container = document.getElementById("claimsList");
-  container.innerHTML = "";
-
-  claims.forEach((c, index) => {
-    const card = document.createElement("div");
-    card.className = `claim-card claim-${c.type}`;
-
-    card.innerHTML = `
-      <div class="claim-index">文${index + 1}</div>
-      <div class="claim-type">[${c.type}]</div>
-      <div class="claim-text">${c.text}</div>
+    container.innerHTML = `
+      <h2>${article.title}</h2>
+      <p>${article.date}｜${article.source}</p>
+      <hr>
+      <h3>本文（文＋分類）</h3>
+      ${sentencesHTML}
+      <hr>
+      <h3>本文テキスト（研究用）</h3>
+      <pre>${article.body}</pre>
     `;
 
-    container.appendChild(card);
-  });
-}
-
-// ---------------------------
-// 右：予測リスト
-// ---------------------------
-function renderPredictions(predictions) {
-  const container = document.getElementById("predictionsList");
-  container.innerHTML = "";
-
-  if (!predictions || predictions.length === 0) {
-    container.textContent = "（予測なし）";
-    return;
+  } catch (err) {
+    container.innerHTML = "<p>記事JSONを読み込めませんでした。</p>";
+    console.error(err);
   }
-
-  predictions.forEach(p => {
-    const box = document.createElement("div");
-    box.className = "prediction-node";
-    box.innerHTML = `
-      <div><b>${p.text}</b></div>
-      <div>信頼度：${p.confidence}</div>
-      <div>対象：${p.target}</div>
-      <div>結果：${p.outcome}</div>
-    `;
-    container.appendChild(box);
-  });
 }
-
-// ---------------------------
-// Future Tree
-// ---------------------------
-function renderFutureTree(treeText) {
-  const el = document.getElementById("futureTreeText");
-  el.textContent = treeText || "（なし）";
-}
-
-// ---------------------------
-// 全体の方向性（軽い要約）
-// ---------------------------
-function renderDirectionSummary(article) {
-  const ul = document.getElementById("directionSummary");
-  ul.innerHTML = "";
-
-  const li = document.createElement("li");
-  li.textContent = article.summary;
-  ul.appendChild(li);
-}
-
-// ---------------------------
-// フィルタ（キーワード & タイプ）
-// ---------------------------
-document.getElementById("keywordInput").addEventListener("input", applyFilters);
-document.getElementById("claimTypeFilter").addEventListener("change", applyFilters);
-
-function applyFilters() {
-  const keyword = document.getElementById("keywordInput").value.trim();
-  const type = document.getElementById("claimTypeFilter").value;
-
-  const claims = window.currentArticle.claims;
-
-  const container = document.getElementById("claimsList");
-  container.innerHTML = "";
-
-  claims.forEach((c, index) => {
-    if (type !== "all" && c.type !== type) return;
-    if (keyword && !c.text.includes(keyword)) return;
-
-    const card = document.createElement("div");
-    card.className = `claim-card claim-${c.type}`;
-    card.innerHTML = `
-      <div class="claim-index">文${index + 1}</div>
-      <div class="claim-type">[${c.type}]</div>
-      <div class="claim-text">${c.text}</div>
-    `;
-    container.appendChild(card);
-  });
-}
-
-// ---------------------------
-loadArticle();

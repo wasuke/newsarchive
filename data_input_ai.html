@@ -2,11 +2,11 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <title>ニュース記事 JSON 生成＆GitHub アップロード</title>
+  <title>ニュース記事 JSON 生成＆GitHub アップロード（新スキーマ対応）</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body { font-family: sans-serif; padding: 20px; }
-    textarea { width: 100%; height: 120px; margin-bottom: 10px; }
+    textarea { width: 100%; height: 180px; margin-bottom: 10px; }
     input, button, select { padding: 8px; margin: 5px 0; width: 100%; }
     .section { margin-top: 30px; }
     .result-box { white-space: pre-wrap; background: #f7f7f7; padding: 10px; border: 1px solid #ccc; }
@@ -26,7 +26,7 @@
   <input id="sourceInput" type="text" />
 
   <label>日付</label>
-  <input id="dateInput" type="text" placeholder="例: 2025-11-21" />
+  <input id="dateInput" type="text" placeholder="例: 2025-11-25（YYYY-MM-DD）" />
 
   <label>本文</label>
   <textarea id="bodyInput"></textarea>

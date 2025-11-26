@@ -88,5 +88,20 @@
       "quote": 1
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764151996240",
+    "title": "＜主張＞ウクライナ和平　ロシアは直ちに停戦せよ",
+    "date": "2025-08-21",
+    "source": "産経新聞",
+    "public": false,
+    "file": "data/1764151996240.json",
+    "typeSummary": {
+      "fact": 10,
+      "prediction": 1,
+      "opinion": 8,
+      "quote": 2
+    },
+    "hasPrediction": true
   }
 ]

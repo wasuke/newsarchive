@@ -1,4 +1,80 @@
 2025/11/26
+■ ニュースアーカイブ JSON スキーマ（正式版）
+
+◆ ルート構造
+
+{
+  "articleId": string,          // 一意のID（通常はUNIXタイムミリ秒）
+  "title": string,              // 記事タイトル
+  "source": string,             // 媒体名（新聞社・ニュースサイト）
+  "date": "YYYY-MM-DD",         // 公開日
+  "public": boolean,            // 非公開/公開フラグ（デフォルト false）
+
+  "text": string,               // 記事全文（段落改行を含む）
+
+  "sentences": [ Sentence ],    // 文単位の分類メタデータ
+
+  "summary": [ string ],        // 要約の箇条書き
+
+  "futureTree": string          // 予測文の依存構造（テキスト形式）
+}
+
+
+⸻
+
+◆ Sentence オブジェクトの構造
+
+Sentence {
+  "id": string,                 // 文ID（s1, s2, ...）
+  "text": string,               // 文そのもの
+  "type": "fact" | "prediction" | "opinion" | "quote",
+  "confidence": number,         // 0〜1 の信頼度
+  "predictionId": string | null // 予測文のID（p1, p2...）。fact/opinion/quote は null
+}
+
+
+⸻
+
+◆ summary の構造
+
+summary: [
+  "要点１ …",
+  "要点２ …",
+  "（予測の整理がある場合はそれも含める）"
+]
+
+
+⸻
+
+◆ futureTree の構造
+
+AI が生成する「未来予測の構造化テキスト」。
+現状は text 形式のみ を正式仕様とする。
+
+例：
+
+"futureTree": "Root: 政策検討状況
+ └─ 事実のみ（予測文なし）
+    └─ この政策に関する続報が将来追加された場合リンクが生成される"
+
+または予測文がある場合：
+
+"futureTree": "Root → p1 → p3
+  p1: 価格予測（未確定）
+  p3: 市場動向の時期予測（2026年夏）"
+
+
+⸻
+
+■ この JSON スキーマの特徴
+
+・text が「記事全文」の正本
+・sentences[] が「AI による文分類」
+・summary[] が「方向性・要約」
+・futureTree が「予測の構造」
+・predictionId により futureTree と sentences がリンク
+
+2025/11/26
 
 ニュースアーカイブ・メタデータスキーマ（読みやすい説明版）
 

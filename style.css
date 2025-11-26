@@ -1,5 +1,5 @@
 /* ============================================================
-   全体レイアウト
+   全体
 ============================================================ */
 
 body {
@@ -20,144 +20,57 @@ header h1 {
   font-size: 22px;
 }
 
-.meta {
+header p {
+  margin: 6px 0 0;
   color: #666;
-  margin-top: 6px;
   font-size: 14px;
 }
 
-
-/* ============================================================
-   3ペインビューア
-============================================================ */
-
-.viewer-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 16px;
-  padding: 16px;
+main {
+  padding: 20px;
 }
 
 
-/* ペイン共通 */
-.pane {
+
+/* ============================================================
+   記事一覧ページ（index.html）
+============================================================ */
+
+.articles-list {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.article-card {
+  border: 1px solid #ccc;
+  padding: 14px;
+  margin: 12px 0;
   background: #fff;
   border-radius: 8px;
-  padding: 16px;
-  border: 1px solid #ddd;
 }
 
-.pane h2 {
+.article-card h3 {
   margin-top: 0;
   font-size: 18px;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 6px;
-  margin-bottom: 12px;
 }
 
-
-/* ============================================================
-   元記事表示（左ペイン）
-============================================================ */
-
-#articleText p {
-  margin: 10px 0;
-  line-height: 1.6;
-}
-
-
-/* ============================================================
-   文メタデータ（中央ペイン）
-============================================================ */
-
-.claim-card {
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background: #fafafa;
-}
-
-.claim-card strong {
+.article-card a {
+  text-decoration: none;
   color: #333;
 }
 
-/* typeごとの色分け */
-.claim-card.type-fact {
-  border-left: 6px solid #4a90e2;
+.article-card a:hover {
+  text-decoration: underline;
 }
 
-.claim-card.type-prediction {
-  border-left: 6px solid #f5a623;
-}
-
-.claim-card.type-opinion {
-  border-left: 6px solid #9013fe;
-}
-
-.claim-card.type-quote {
-  border-left: 6px solid #999;
-}
-
-/* タグ色 */
-.claim-type.fact { background: #e2f1ff; padding: 2px 4px; border-radius: 4px; }
-.claim-type.prediction { background: #fff0cc; padding: 2px 4px; border-radius: 4px; }
-.claim-type.opinion { background: #f3e6ff; padding: 2px 4px; border-radius: 4px; }
-.claim-type.quote { background: #eee; padding: 2px 4px; border-radius: 4px; }
-
-
-/* ============================================================
-   右ペインの summary-card
-============================================================ */
-
-.summary-card {
-  background: #fafafa;
-  border: 1px solid #ddd;
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 16px;
-}
-
-.summary-card h3 {
-  margin-top: 0;
-  font-size: 16px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 4px;
-  margin-bottom: 10px;
-}
-
-.summary-card ul {
-  padding-left: 20px;
-}
-
-.summary-card li {
-  margin-bottom: 6px;
+.meta {
+  color: #555;
+  margin-bottom: 8px;
+  font-size: 13px;
 }
 
 
-/* FutureTree */
-#futureTreeText {
-  background: #fff;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  white-space: pre-wrap;
-  font-size: 14px;
-}
-
-
-/* ============================================================
-   typeSummary リスト
-============================================================ */
-
-#typeSummaryList li {
-  margin: 4px 0;
-}
-
-
-/* ============================================================
-   バッジ
-============================================================ */
+/* 予測バッジ・公開バッジ */
 
 .badge-private {
   background: #c33;
@@ -187,8 +100,175 @@ header h1 {
 }
 
 
+/* typeSummary（一覧ページ用） */
+
+.type-summary {
+  margin-top: 10px;
+}
+
+.type-summary .ts {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #333;
+}
+
+.ts.fact {
+  background: #e2f1ff;
+}
+
+.ts.prediction {
+  background: #fff0cc;
+}
+
+.ts.opinion {
+  background: #f3e6ff;
+}
+
+.ts.quote {
+  background: #eee;
+}
+
+
+
 /* ============================================================
-   スマホ対応（縦並び）
+   3ペイン記事ビューア（article_viewer.html）
+============================================================ */
+
+.viewer-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.pane {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  border: 1px solid #ddd;
+}
+
+.pane h2 {
+  margin-top: 0;
+  font-size: 18px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 6px;
+  margin-bottom: 12px;
+}
+
+
+/* 元記事 */
+
+#articleText p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+
+/* 文メタデータ */
+
+.claim-card {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+}
+
+.claim-card strong {
+  color: #333;
+}
+
+.claim-card.type-fact {
+  border-left: 6px solid #4a90e2;
+}
+
+.claim-card.type-prediction {
+  border-left: 6px solid #f5a623;
+}
+
+.claim-card.type-opinion {
+  border-left: 6px solid #9013fe;
+}
+
+.claim-card.type-quote {
+  border-left: 6px solid #999;
+}
+
+.claim-type.fact {
+  background: #e2f1ff;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.claim-type.prediction {
+  background: #fff0cc;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.claim-type.opinion {
+  background: #f3e6ff;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.claim-type.quote {
+  background: #eee;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+
+/* summary-card（右ペイン） */
+
+.summary-card {
+  background: #fafafa;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.summary-card h3 {
+  margin-top: 0;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 4px;
+  margin-bottom: 10px;
+}
+
+.summary-card ul {
+  padding-left: 20px;
+}
+
+.summary-card li {
+  margin-bottom: 6px;
+}
+
+#futureTreeText {
+  background: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  white-space: pre-wrap;
+  font-size: 14px;
+}
+
+
+/* typeSummary（ビューア右ペイン用） */
+
+#typeSummaryList li {
+  margin: 4px 0;
+}
+
+
+
+/* ============================================================
+   スマホ対応
 ============================================================ */
 
 @media (max-width: 900px) {

@@ -50,3 +50,11 @@
 .ts.prediction { background: #fff3e0; }
 .ts.opinion { background: #f0e6ff; }
 .ts.quote { background: #f3f3f3; }
+
+.claim-type.fact { background: #e2f1ff; padding: 2px 4px; border-radius: 4px; }
+.claim-type.prediction { background: #fff0cc; padding: 2px 4px; border-radius: 4px; }
+.claim-type.opinion { background: #f3e6ff; padding: 2px 4px; border-radius: 4px; }
+.claim-type.quote { background: #eee; padding: 2px 4px; border-radius: 4px; }
+
+.badge-pred { background: #2a7; color:#fff; padding:3px 6px; border-radius:4px; }
+.badge-nopred { background:#999; color:#fff; padding:3px 6px; border-radius:4px; }

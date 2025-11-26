@@ -13,40 +13,20 @@
     { "id": "s3", "text": "現行モデルは発売から約15年が経過しており、最近の登録台数は月150台程度に留まっていましたが、この新型で巻き返しを図りたいところ。", "type": "fact", "confidence": 0.9, "predictionId": null },
     { "id": "s4", "text": "日産の経営再建の象徴とも位置づけられる新型エルグランドは、まさに「失敗できないクルマ」なのです。", "type": "opinion", "confidence": 0.8, "predictionId": null },
     { "id": "s5", "text": "新型エルグランドの最大の武器は、第3世代e-POWERの搭載です。", "type": "fact", "confidence": 0.95, "predictionId": null },
-    { "id": "s6", "text": "発電に特化した新設計の1.5L 3気筒ターボエンジン「ZR15DDTe」と、モーター・発電機・インバーター・減速機・増速機を一体化した「5-in-1 e-POWERパワートレインユニット」により、コンパクトかつ高剛性な構造を実現しています。", "type": "fact", "confidence": 1.0, "predictionId": null },
-    { "id": "s7", "text": "サイズ面でも大幅進化を遂げました。", "type": "fact", "confidence": 0.9, "predictionId": null },
-    { "id": "s8", "text": "ボディサイズは全長4995×全幅1895×全高1975mmとし、現行モデルから20mm長く、45mm広く、そして160mm高くなりました。", "type": "fact", "confidence": 1.0, "predictionId": null },
-    { "id": "s9", "text": "これはトヨタ「アルファード」の幅と高さをしのぐサイズとなっています。", "type": "fact", "confidence": 0.95, "predictionId": null },
-    { "id": "s10", "text": "価格は現行エルグランドの最安価グレードと比べ、約100万円高い500万円からのスタートが有力視されており、上級グレードは800万円を軽く超えると予想されています。", "type": "prediction", "confidence": 0.85, "predictionId": "p1" },
-    { "id": "s11", "text": "内装では国内モデルとして初採用となる、14.3インチの大画面統合型インターフェースディスプレイが装備され、トヨタアルファード＆ヴェルファイアで廃止された助手席オットマンが装備されるなど、ライバルを意識した装備が充実しています。", "type": "fact", "confidence": 0.95, "predictionId": null },
-    { "id": "s12", "text": "新型エルグランドの発表には、SNS上で様々な反応が寄せられており、... ", "type": "fact", "confidence": 0.95, "predictionId": null },
-    { "id": "s13", "text": "また、「近年の業績悪化で日産ブランド自体が不安」...", "type": "fact", "confidence": 0.95, "predictionId": null },
-    { "id": "s14", "text": "新型エルグランドの真価は、アルファードとの差別化にあります。", "type": "opinion", "confidence": 0.8, "predictionId": null },
-    { "id": "s15", "text": "アルファードが「Forceful×IMPACT LUXURY」...", "type": "fact", "confidence": 0.9, "predictionId": null },
-    { "id": "s16", "text": "日本の伝統工芸「組子」をモチーフにしたフロントグリル...", "type": "fact", "confidence": 0.9, "predictionId": null },
-    { "id": "s17", "text": "インテリアでも「紫檀 -シタン-」という日本の美意識...", "type": "fact", "confidence": 0.9, "predictionId": null },
-    { "id": "s18", "text": "これは「力強い存在感」vs「和の美学」という対立軸での勝負です。", "type": "opinion", "confidence": 0.75, "predictionId": null },
-    { "id": "s19", "text": "アルファードの攻めの豪華さに真正面勝負を挑むのではなく...", "type": "opinion", "confidence": 0.8, "predictionId": null },
-    { "id": "s20", "text": "果たして「元祖プレミアムミニバン」は王座を奪還できるのでしょうか。", "type": "prediction", "confidence": 0.7, "predictionId": "p2" },
-    { "id": "s21", "text": "その答えは、2026年夏に明らかになります。", "type": "prediction", "confidence": 0.95, "predictionId": "p3" }
+    { "id": "s6", "text": "発電に特化した新設計の1.5L 3気筒ターボエンジンが採用されている。", "type": "fact", "confidence": 1.0, "predictionId": null },
+    { "id": "s7", "text": "ボディサイズは全長4995×全幅1895×全高1975mmとなり、アルファードを上回る大きさとなっている。", "type": "fact", "confidence": 0.95, "predictionId": null },
+    { "id": "s8", "text": "価格は約100万円高い500万円からのスタートが有力視されており、上級グレードは800万円を超えると予想されている。", "type": "prediction", "confidence": 0.85, "predictionId": "p1" },
+    { "id": "s9", "text": "SNSではデザインに対する賛否の声が上がっている。", "type": "fact", "confidence": 0.9, "predictionId": null },
+    { "id": "s10", "text": "日産ブランドに対する不安の声も散見される。", "type": "fact", "confidence": 0.9, "predictionId": null },
+    { "id": "s11", "text": "果たして新型エルグランドは王座を奪還できるのかという点が注目されている。", "type": "prediction", "confidence": 0.7, "predictionId": "p2" },
+    { "id": "s12", "text": "その結果は2026年夏に明らかになるとされている。", "type": "prediction", "confidence": 0.95, "predictionId": "p3" }
   ],
 
   "summary": [
-    "新型エルグランドは 16 年ぶりのフルモデルチェンジで大幅に進化。",
-    "日本の伝統美を取り入れたデザインでアルファードとの差別化を図っている。",
-    "SNSでは外装デザインや日産の経営状況への賛否が混在している。",
-    "価格帯は500〜800万円超とされ、プレミアムミニバン市場での競争が注目される。",
-    "主要な予測：価格動向、市場での順位、2026年夏の結果発表。"
+    "新型エルグランドは16年ぶりのモデルチェンジで大幅に刷新され、サイズ拡大や先進装備が特徴となっている。",
+    "SNSではデザインや日産ブランドへの不安など、賛否が混在している。",
+    "今後の焦点は、価格推移と市場評価、そして2026年夏に予測される販売評価の結果にある。"
   ],
 
-  "futureTree": "Root → p1（価格予測） → p2（王座奪還可能性） → p3（2026 夏 判明）",
-
-  "typeSummary": {
-    "fact": 14,
-    "prediction": 3,
-    "opinion": 4,
-    "quote": 0
-  },
-
-  "hasPrediction": true
+  "futureTree": "Root: 新型エルグランドの評価\n ├─ p1: 価格帯の予測（500〜800万円）\n ├─ p2: 王座奪還の可能性\n └─ p3: 2026年夏に結果判明（pending）"
 }

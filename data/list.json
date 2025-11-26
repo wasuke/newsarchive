@@ -43,5 +43,20 @@
       "quote": 0
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764145350876",
+    "title": "9月1日は「防災の日」、「知っている」半数以下　虚偽情報4人に1人接触　日赤調べ",
+    "date": "2025-09-01",
+    "source": "朝日新聞SDGs ACTION!",
+    "public": false,
+    "file": "data/1764145350876.json",
+    "typeSummary": {
+      "fact": 19,
+      "prediction": 1,
+      "opinion": 0,
+      "quote": 0
+    },
+    "hasPrediction": true
   }
 ]

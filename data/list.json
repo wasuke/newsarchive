@@ -73,5 +73,20 @@
       "quote": 0
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764150438354",
+    "title": "（社説）ウクライナ和平　米は被害国に寄り添え",
+    "date": "2025-11-26",
+    "source": "朝日新聞",
+    "public": false,
+    "file": "data/1764150438354.json",
+    "typeSummary": {
+      "fact": 12,
+      "prediction": 1,
+      "opinion": 9,
+      "quote": 1
+    },
+    "hasPrediction": true
   }
 ]

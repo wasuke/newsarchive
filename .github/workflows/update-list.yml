@@ -44,23 +44,49 @@ jobs:
             f.endsWith('.json') && f !== 'list.json'
           );
 
-          const list = files.map(f => {
-            const json = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
-            return {
+          const list = [];
+
+          for (const f of files) {
+            const fullPath = path.join(dir, f);
+            let json;
+
+            try {
+              json = JSON.parse(fs.readFileSync(fullPath, 'utf8'));
+            } catch (err) {
+              console.error("JSON parse error:", f, err);
+              continue;
+            }
+
+            // 文分類の集計
+            const typeSummary = { fact: 0, prediction: 0, opinion: 0, quote: 0 };
+
+            if (Array.isArray(json.sentences)) {
+              json.sentences.forEach(s => {
+                if (s.type && typeSummary[s.type] !== undefined) {
+                  typeSummary[s.type]++;
+                }
+              });
+            }
+
+            const hasPrediction = typeSummary.prediction > 0;
+
+            list.push({
               id: json.articleId,
               title: json.title,
               date: json.date,
               source: json.source,
               public: json.public ?? false,
-              file: `data/${f}`
-            };
-          });
+              file: `data/${f}`,
+              typeSummary,
+              hasPrediction
+            });
+          }
 
           fs.writeFileSync(
             path.join(dir, 'list.json'),
             JSON.stringify(list, null, 2)
           );
-          console.log("list.json generated.");
+          console.log("list.json generated with typeSummary & hasPrediction.");
           EOF
 
       - name: Commit changes
@@ -75,5 +101,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "Auto-update list.json"
+          git commit -m "Auto-update list.json (with typeSummary & hasPrediction)"
           git push

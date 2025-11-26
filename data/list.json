@@ -22,9 +22,9 @@
     "public": false,
     "file": "data/1764095375389.json",
     "typeSummary": {
-      "fact": 14,
+      "fact": 8,
       "prediction": 3,
-      "opinion": 4,
+      "opinion": 1,
       "quote": 0
     },
     "hasPrediction": true

@@ -58,5 +58,20 @@
       "quote": 0
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764147758145",
+    "title": "聖断拝す　大東亜戦争終結",
+    "date": "1945-09-06",
+    "source": "日本ニュース",
+    "public": false,
+    "file": "data/1764147758145.json",
+    "typeSummary": {
+      "fact": 9,
+      "prediction": 2,
+      "opinion": 4,
+      "quote": 0
+    },
+    "hasPrediction": true
   }
 ]

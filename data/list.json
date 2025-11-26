@@ -28,5 +28,20 @@
       "quote": 0
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764135124532",
+    "title": "息子がスーパーで「トマト」を床に落とした！ 店員さんの「大丈夫ですよ」の言葉に甘えたら、夫は「弁償したほうがいい」とのこと。安いものでも弁償は必要でしょうか？",
+    "date": "2025-11-25",
+    "source": "ファイナンシャルフィールド",
+    "public": false,
+    "file": "data/1764135124532.json",
+    "typeSummary": {
+      "fact": 12,
+      "prediction": 9,
+      "opinion": 15,
+      "quote": 0
+    },
+    "hasPrediction": true
   }
 ]

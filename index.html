@@ -14,9 +14,74 @@
 </header>
 
 <main>
-  <div id="articlesList"></div>
+  <div id="articlesList" class="articles-list"></div>
 </main>
 
-<script src="./script.js"></script>
+<script>
+// ============================================================
+// index.html 専用スクリプト
+// list.json を読み込み、記事一覧を描画
+// ============================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadArticleList();
+});
+
+async function loadArticleList() {
+  try {
+    const response = await fetch("./data/list.json");
+    if (!response.ok) {
+      console.error("list.json が読み込めません");
+      return;
+    }
+
+    const list = await response.json();
+    renderArticleList(list);
+  } catch (e) {
+    console.error("読み込みエラー:", e);
+  }
+}
+
+function renderArticleList(list) {
+  const container = document.getElementById("articlesList");
+  container.innerHTML = "";
+
+  list.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "article-card";
+
+    const priv = item.public === false ? `<span class="badge-private">非公開</span>` : "";
+
+    const predBadge = item.hasPrediction
+      ? `<span class="badge-pred">予測あり</span>`
+      : `<span class="badge-nopred">予測なし</span>`;
+
+    const ts = item.typeSummary || { fact: 0, prediction: 0, opinion: 0, quote: 0 };
+
+    card.innerHTML = `
+      <h3>
+        <a href="article_viewer.html?file=${encodeURIComponent(item.file)}">
+          ${item.title}
+        </a>
+      </h3>
+      <p class="meta">
+        ${item.source || "媒体不明"} ｜ ${item.date || ""}
+        ${priv}
+        ${predBadge}
+      </p>
+
+      <div class="type-summary">
+        <span class="ts fact">事実: ${ts.fact}</span>
+        <span class="ts prediction">予測: ${ts.prediction}</span>
+        <span class="ts opinion">意見: ${ts.opinion}</span>
+        <span class="ts quote">引用: ${ts.quote}</span>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+</script>
+
 </body>
 </html>

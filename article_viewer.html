@@ -13,6 +13,7 @@
   <p class="meta">
     <span id="articleSource"></span>｜
     <span id="articleDate"></span>
+    <span id="badgePrediction"></span>
   </p>
 </header>
 
@@ -34,22 +35,31 @@
   <section class="pane pane-right">
     <h2>方向性</h2>
 
+    <!-- 要約 -->
     <div class="summary-card">
-      <h3>要約</h3>
+      <h3>要約 & 予測内容</h3>
       <ul id="directionSummary"></ul>
     </div>
 
+    <!-- Future Tree -->
     <div class="summary-card">
       <h3>Future Tree</h3>
       <pre id="futureTreeText"></pre>
     </div>
+
+    <!-- 記事全体の分類内訳 -->
+    <div class="summary-card">
+      <h3>分類内訳（typeSummary）</h3>
+      <ul id="typeSummaryList"></ul>
+    </div>
+
   </section>
 
 </main>
 
 <script>
 // ==================================================================
-//   記事ビューア：新スキーマ対応（body / classifications）
+//   新スキーマ対応 article_viewer.js
 // ==================================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -96,12 +106,24 @@ function renderArticle(article) {
   document.getElementById("articleSource").innerText = article.source || "";
   document.getElementById("articleDate").innerText = article.date || "";
 
-  // ----- 本文：article.body -----
+  // 予測バッジ
+  if (article.hasPrediction) {
+    document.getElementById("badgePrediction").innerHTML =
+      `<span class="badge-pred">予測あり</span>`;
+  } else {
+    document.getElementById("badgePrediction").innerHTML =
+      `<span class="badge-nopred">予測なし</span>`;
+  }
+
+
+  // ================================
+  //   左ペイン：本文（article.text）
+  // ================================
   const articleTextDiv = document.getElementById("articleText");
   articleTextDiv.innerHTML = "";
 
-  if (article.body) {
-    const sentences = article.body.split(/(?<=[。！？\?])/g);
+  if (article.text) {
+    const sentences = article.text.split(/(?<=[。！？\?])/g);
     sentences.forEach(s => {
       const p = document.createElement("p");
       p.innerText = s.trim();
@@ -109,31 +131,81 @@ function renderArticle(article) {
     });
   }
 
-  // ----- 文メタデータ：article.classifications -----
+
+  // ================================
+  //   中央ペイン：文メタデータ
+  // ================================
   const claimsContainer = document.getElementById("claimsList");
   claimsContainer.innerHTML = "";
 
-  if (article.classifications && Array.isArray(article.classifications)) {
-    article.classifications.forEach((c, idx) => {
+  if (article.sentences && Array.isArray(article.sentences)) {
+    article.sentences.forEach((c, idx) => {
       const card = document.createElement("div");
-      card.className = "claim-card";
+      card.className = `claim-card type-${c.type}`;
 
       card.innerHTML = `
-        <div><strong>${idx + 1}.</strong> ${c.sentence}</div>
-        <div>分類：<span class="claim-type">${c.claimType}</span></div>
+        <div><strong>${idx + 1}.</strong> ${c.text}</div>
+        <div>
+          分類：
+          <span class="claim-type ${c.type}">${c.type}</span>
+          （信頼度: ${c.confidence ?? "N/A"}）
+        </div>
       `;
 
       claimsContainer.appendChild(card);
     });
   }
 
-  // ----- 要約（まだ生成していないため仮表示） -----
-  const direction = document.getElementById("directionSummary");
-  direction.innerHTML = "<li>要約データは未生成です</li>";
 
-  // ----- Future Tree（これも未生成） -----
+  // ================================
+  //   右ペイン：summary
+  // ================================
+  const summaryBox = document.getElementById("directionSummary");
+  summaryBox.innerHTML = "";
+
+  if (article.summary && article.summary.length > 0) {
+    article.summary.forEach(item => {
+      const li = document.createElement("li");
+      li.innerText = item;
+      summaryBox.appendChild(li);
+    });
+  } else {
+    summaryBox.innerHTML = "<li>要約データなし</li>";
+  }
+
+
+  // ================================
+  //   Future Tree
+  // ================================
   const ft = document.getElementById("futureTreeText");
-  ft.innerText = "No Future Tree.";
+  ft.innerText = article.futureTree || "No Future Tree.";
+
+
+  // ================================
+  //   typeSummary
+  // ================================
+  const typeSummaryList = document.getElementById("typeSummaryList");
+  typeSummaryList.innerHTML = "";
+
+  if (article.typeSummary) {
+    const ts = article.typeSummary;
+
+    const items = [
+      ["事実 (fact)", ts.fact],
+      ["予測 (prediction)", ts.prediction],
+      ["意見 (opinion)", ts.opinion],
+      ["引用 (quote)", ts.quote]
+    ];
+
+    items.forEach(([label, count]) => {
+      const li = document.createElement("li");
+      li.textContent = `${label}: ${count}`;
+      typeSummaryList.appendChild(li);
+    });
+
+  } else {
+    typeSummaryList.innerHTML = "<li>typeSummary データなし</li>";
+  }
 }
 
 </script>

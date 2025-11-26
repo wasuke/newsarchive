@@ -5,7 +5,14 @@
     "date": "2025-11-25",
     "source": "テレビ朝日報道局",
     "public": false,
-    "file": "data/1732627200000.json"
+    "file": "data/1732627200000.json",
+    "typeSummary": {
+      "fact": 0,
+      "prediction": 0,
+      "opinion": 0,
+      "quote": 0
+    },
+    "hasPrediction": false
   },
   {
     "id": "1764095375389",
@@ -13,6 +20,13 @@
     "date": "2025-11-26",
     "source": "TRILLニュース",
     "public": false,
-    "file": "data/1764095375389.json"
+    "file": "data/1764095375389.json",
+    "typeSummary": {
+      "fact": 14,
+      "prediction": 3,
+      "opinion": 4,
+      "quote": 0
+    },
+    "hasPrediction": true
   }
 ]

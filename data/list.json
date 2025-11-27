@@ -118,5 +118,20 @@
       "quote": 8
     },
     "hasPrediction": false
+  },
+  {
+    "id": "1764222548481",
+    "title": "日本ニュース　第２３１号",
+    "date": "1944-11-02",
+    "source": "日本ニュース",
+    "public": true,
+    "file": "data/1764222548481.json",
+    "typeSummary": {
+      "fact": 21,
+      "prediction": 0,
+      "opinion": 0,
+      "quote": 0
+    },
+    "hasPrediction": false
   }
 ]

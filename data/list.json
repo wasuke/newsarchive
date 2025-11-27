@@ -103,5 +103,20 @@
       "quote": 2
     },
     "hasPrediction": true
+  },
+  {
+    "id": "1764221155027",
+    "title": "日本ニュース　第７９号",
+    "date": "1941-12-09",
+    "source": "日本ニュース",
+    "public": true,
+    "file": "data/1764221155027.json",
+    "typeSummary": {
+      "fact": 14,
+      "prediction": 0,
+      "opinion": 0,
+      "quote": 8
+    },
+    "hasPrediction": false
   }
 ]

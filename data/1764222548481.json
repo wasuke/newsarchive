@@ -1,0 +1,165 @@
+{
+  "articleId": "1764222548481",
+  "title": "日本ニュース　第２３１号",
+  "source": "日本ニュース",
+  "date": "1944-11-02",
+  "public": true,
+  "text": "大本営発表。昭和１９年１０月２７日１６時３０分。１０月２４日より同２６日にわたる彼我艦隊の比島東方海面の奮闘における戦果並びに被害、次のごとし。１、総合戦果。撃沈、航空母艦８隻。巡洋艦３隻。駆逐艦２隻。輸送船４隻以上。撃破、航空母艦７隻。戦艦１隻。巡洋艦２隻。撃墜、約５００機。２、我が方の損害。艦艇、航空母艦１隻。巡洋艦２隻。駆逐艦２隻沈没。航空母艦１隻中破。飛行機、未帰還１２６機。右のほか、かく２６日発表のごとく、レイテ湾において戦艦１隻沈没。１隻中破の損害あり。注、本戦闘をフィリピン沖海戦と呼称す。",
+  "sentences": [
+    {
+      "id": "s1",
+      "text": "大本営発表。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s2",
+      "text": "昭和１９年１０月２７日１６時３０分。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s3",
+      "text": "１０月２４日より同２６日にわたる彼我艦隊の比島東方海面の奮闘における戦果並びに被害、次のごとし。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s4",
+      "text": "１、総合戦果。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s5",
+      "text": "撃沈、航空母艦８隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s6",
+      "text": "巡洋艦３隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s7",
+      "text": "駆逐艦２隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s8",
+      "text": "輸送船４隻以上。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s9",
+      "text": "撃破、航空母艦７隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s10",
+      "text": "戦艦１隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s11",
+      "text": "巡洋艦２隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s12",
+      "text": "撃墜、約５００機。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s13",
+      "text": "２、我が方の損害。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s14",
+      "text": "艦艇、航空母艦１隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s15",
+      "text": "巡洋艦２隻。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s16",
+      "text": "駆逐艦２隻沈没。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s17",
+      "text": "航空母艦１隻中破。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s18",
+      "text": "飛行機、未帰還１２６機。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s19",
+      "text": "右のほか、かく２６日発表のごとく、レイテ湾において戦艦１隻沈没。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s20",
+      "text": "１隻中破の損害あり。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    },
+    {
+      "id": "s21",
+      "text": "注、本戦闘をフィリピン沖海戦と呼称す。",
+      "type": "fact",
+      "confidence": 1,
+      "predictionId": null
+    }
+  ],
+  "summary": [
+    "1944年10月24日から26日にかけて比島東方海面で日米艦隊の戦闘が行われた。",
+    "大本営は8隻の航空母艦を含む多くの敵艦艇と航空機を撃沈・撃破したと発表した。",
+    "日本側も複数の艦艇や航空機に損失を被った。",
+    "この戦いは『フィリピン沖海戦』と呼称される。",
+    "本記事に予測や見通しの記述はない。"
+  ],
+  "futureTree": "Root: 事実のみ（予測なし）"
+}

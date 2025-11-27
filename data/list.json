@@ -163,5 +163,20 @@
       "quote": 3
     },
     "hasPrediction": false
+  },
+  {
+    "id": "1764223654328",
+    "title": "前のめり高市首相「定数削減やりましょう！」いきなり党首討論で呼びかけも…自民党内ドッチラケの理由",
+    "date": "2025-11-27",
+    "source": "日刊ゲンダイ",
+    "public": false,
+    "file": "data/1764223654328.json",
+    "typeSummary": {
+      "fact": 8,
+      "prediction": 1,
+      "opinion": 7,
+      "quote": 5
+    },
+    "hasPrediction": true
   }
 ]

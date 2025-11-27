@@ -133,5 +133,20 @@
       "quote": 0
     },
     "hasPrediction": false
+  },
+  {
+    "id": "1764223006563",
+    "title": "日本ニュース　第２３１号",
+    "date": "2025-11-27",
+    "source": "日本ニュース",
+    "public": false,
+    "file": "data/1764223006563.json",
+    "typeSummary": {
+      "fact": 4,
+      "prediction": 0,
+      "opinion": 0,
+      "quote": 3
+    },
+    "hasPrediction": false
   }
 ]
